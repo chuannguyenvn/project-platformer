@@ -1,11 +1,11 @@
 ﻿import { Scene } from 'phaser'
-import Assets from '../constants/Keys'
+import { Constants } from '../index'
 
 
 class LoadScene extends Scene
 {
     constructor() {
-        super({ key: Assets.Key.Scene.LOAD })
+        super({ key: Constants.Key.Scene.LOAD })
     }
 
     preload(): void {
