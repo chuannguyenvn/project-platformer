@@ -1,5 +1,6 @@
 import GAME_CONFIG from './constants/Config'
 import Phaser from 'phaser'
+import Assets from './constants/Assets'
 
 export class Game extends Phaser.Game
 {

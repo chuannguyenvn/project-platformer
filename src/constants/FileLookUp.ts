@@ -1,3 +1,3 @@
-﻿const FileLookUp = {}
-
-export default FileLookUp
+﻿const FileLookUp = {
+    'a': 'b',
+}
