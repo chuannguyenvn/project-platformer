@@ -1,6 +1,6 @@
 ﻿import Phaser, { Scene } from 'phaser'
 import FileLookUp = Assets.FileLookUp
-import Assets from '../constants/Assets'
+import Assets from '../constants/Keys'
 
 class PreloadHelper
 {
