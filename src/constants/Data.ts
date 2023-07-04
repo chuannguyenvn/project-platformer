@@ -8,6 +8,8 @@ export class Data
         [Key.Audio.DEFAULT]: '',
         [Key.Sprite.CIRCLE]: './assets/images/circle.png',
         [Key.Sprite.SQUARE]: './assets/images/square.png',
+        [Key.Sprite.COIN_FRONT]: './assets/images/coin-front.png',
+        [Key.Sprite.COIN_SIDE]: './assets/images/coin-side.png',
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
         [Key.Tilemap.LEVEL_1_TERRAIN]: './assets/tiled/level-1_terrain.csv',

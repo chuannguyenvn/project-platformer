@@ -1,7 +1,8 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import PreloadHelper from '../utilities/PreloadHelper'
-import { Data } from '../constants'
+import { Data, Key } from '../constants'
+import Coin from '../objects/Coin'
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import Body = Phaser.Physics.Arcade.Body
@@ -19,6 +20,8 @@ class BootScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)
         PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_1_TERRAIN)
         PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_1_DECORATION)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_SIDE)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_FRONT)
 
     }
 
@@ -41,6 +44,19 @@ class BootScene extends Scene
                 (this.player.body as Body).setVelocityY(-700)
             }
         }, this)
+
+        this.anims.create({
+            key: Key.Animation.COIN,
+            frames: [
+                { key: Key.Sprite.COIN_FRONT },
+                { key: Key.Sprite.COIN_SIDE },
+            ],
+            frameRate: 2,
+            repeat: -1,
+        })
+
+        const coins = map.createFromObjects(, { gid: Key.Tileset.Interactables.COIN_FRONT, classType: Coin })
+
     }
 
     update(time: number, delta: number) {

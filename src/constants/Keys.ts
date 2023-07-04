@@ -11,8 +11,14 @@
         SQUARE = 'key.sprite.square',
         GRADIENT_TOP_TO_BOTTOM = 'key.sprite.gradient-top-to-bottom',
         KENNEY_DEFAULT_TILESET = 'key.sprite.kenney-default-tileset',
+        COIN_FRONT = 'key.sprite.coin-front',
+        COIN_SIDE = 'key.sprite.coin-side',
     }
 
+    export enum Animation
+    {
+        COIN = 'key.animation.coin',
+    }
 
     export enum Scene
     {
@@ -99,6 +105,8 @@
             DOOR_TOP = 110,
             DOOR_WITH_WINDOW = 130,
             DOOR_NO_WINDOW = 150,
+            COIN_FRONT = 151,
+            COIN_SIDE = 152,
         }
 
         export namespace Props
