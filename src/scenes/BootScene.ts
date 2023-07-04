@@ -1,8 +1,7 @@
 ﻿import { Scene } from 'phaser'
-import PreloadHelper from '../utilities/PreloadHelper'
 import { Constants } from '../index'
+import PreloadHelper from '../utilities/PreloadHelper'
 import Tileset = Phaser.Tilemaps.Tileset
-import Terrain = Constants.Key.Tileset.Terrain
 
 class BootScene extends Scene
 {
@@ -10,20 +9,18 @@ class BootScene extends Scene
         super({ key: Constants.Key.Scene.BOOT })
     }
 
-    preload(): void {
+    preload() {
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)
+        PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_1_TERRAIN)
+        PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_1_DECORATION)
+
     }
 
-    create(): void {
-        const level = [
-            [Terrain.Grass.TOP_LEFT, Terrain.Grass.TOP_MID, Terrain.Grass.TOP_RIGHT, -1],
-            [Terrain.Base.MID_LEFT, Terrain.Base.MID_MID, Terrain.Base.MID_RIGHT, -1],
-            [Terrain.Base.BOT_LEFT, Terrain.Base.BOT_MID, Terrain.Base.BOT_MID, Terrain.Grass.ROW_MID],
-        ]
+    create() {
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1_TERRAIN })
+        const tileset = map.addTilesetImage(Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)?.setTileSize(18, 18)
 
-        const map = this.make.tilemap({ data: level, tileWidth: 18, tileHeight: 18 })
-        const tiles = map.addTilesetImage(Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
-        const layer = map.createLayer(0, tiles, 0, 0)
+        map.createLayer(0, tileset as Tileset)
     }
 }
 

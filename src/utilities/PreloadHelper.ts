@@ -1,4 +1,4 @@
-﻿import Phaser, { Scene } from 'phaser'
+﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 
 class PreloadHelper
@@ -9,6 +9,10 @@ class PreloadHelper
 
     public static preloadSound(scene: Scene, key: Constants.Key.Audio): void {
         scene.load.audio(key, Constants.FileLookUp[key])
+    }
+
+    public static preloadTilemap(scene: Scene, key: Constants.Key.Tilemap): void {
+        scene.load.tilemapCSV(key, Constants.FileLookUp[key])
     }
 }
 

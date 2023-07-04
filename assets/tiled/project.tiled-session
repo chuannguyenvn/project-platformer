@@ -19,16 +19,19 @@
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 449.5,
-                "y": -263.25
+                "x": 180,
+                "y": -546.25
             }
         },
+        "level-1.tmx#Default": {
+            "scaleInDock": 1
+        },
         "rules.tmx": {
-            "scale": 4,
+            "scale": 11,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 174.75,
-                "y": 1167.625
+                "x": 44.72727272727273,
+                "y": 173.6818181818182
             }
         },
         "tiles_packed.tsx": {
@@ -36,9 +39,11 @@
             "scaleInEditor": 1
         }
     },
+    "last.exportedFilePath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
     "last.externalTilesetPath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
     "last.imagePath": "C:/Users/chuan/Desktop/kenney_pixel-platformer(1)/Tilemap",
     "map.fixedSize": false,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 18,
     "map.tileWidth": 18,

@@ -154,4 +154,14 @@
             }
         }
     }
+
+    export enum Tilemap
+    {
+        LEVEL_1_TERRAIN = 'key.tilemap.level-1.terrain',
+        LEVEL_1_DECORATION = 'key.tilemap.level-1.decoration',
+        LEVEL_2_TERRAIN = 'key.tilemap.level-2.terrain',
+        LEVEL_2_DECORATION = 'key.tilemap.level-2.decoration',
+        LEVEL_3_TERRAIN = 'key.tilemap.level-3.terrain',
+        LEVEL_3_DECORATION = 'key.tilemap.level-3.decoration',
+    }
 }
