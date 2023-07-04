@@ -12,6 +12,10 @@ const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
     backgroundColor: 0xffffff,
     physics: {
         default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: { y: 2000 },
+        },
     },
     pixelArt: true,
 }
