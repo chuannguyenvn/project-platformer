@@ -15,6 +15,8 @@ class LoadScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_SIDE)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_FRONT)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPIKE)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPRING_COMPRESSED)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPRING_RELEASED)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SQUARE)
     }
 

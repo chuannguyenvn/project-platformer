@@ -14,6 +14,8 @@
         COIN_FRONT = 'key.sprite.coin-front',
         COIN_SIDE = 'key.sprite.coin-side',
         SPIKE = 'key.sprite.spike',
+        SPRING_COMPRESSED = 'key.sprite.spring-compressed',
+        SPRING_RELEASED = 'key.sprite.spring-released',
     }
 
     export enum Animation

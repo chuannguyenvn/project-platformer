@@ -1,12 +1,13 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import Player from '../objects/Player'
-import { Data, Key } from '../constants'
-import Coin from '../objects/Coin'
+import { Data } from '../constants'
+import Spike from '../objects/Spike'
+import Spring from '../objects/Spring'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
-import Spike from '../objects/Spike'
+import GameObject = Phaser.GameObjects.GameObject
 
 class PlayScene extends Scene
 {
@@ -18,6 +19,7 @@ class PlayScene extends Scene
     public dKey: Phaser.Input.Keyboard.Key
 
     private player: Group
+    private springs: GameObject[]
 
     constructor() {
         super({ key: Constants.Key.Scene.PLAY })
@@ -68,7 +70,6 @@ class PlayScene extends Scene
 
         map.setCollision(Data.getCollidableTiles())
 
-        this.physics.add.collider(this.player, layer as TilemapLayer)
 
         // const coins = map.createFromObjects('objects', {
         //     name: 'coin',
@@ -77,12 +78,26 @@ class PlayScene extends Scene
 
         map.createFromObjects('objects', {
             name: 'spike',
-            classType: Spike
+            classType: Spike,
         })
+
+        this.springs = map.createFromObjects('objects', {
+            name: 'spring',
+            classType: Spring,
+        })
+
+        this.physics.add.collider(this.player, layer as TilemapLayer)
+        this.physics.add.collider(this.springs, layer as TilemapLayer)
     }
 
     update(time: number, delta: number) {
         this.controls.update(delta)
+
+        this.physics.world.overlap(this.player, this.springs, (player, spring) => {
+            (player as Player).handleSpringCollision();
+            (spring as Spring).release();
+            console.log('aaaaaaaaaaaa');
+        })
     }
 }
 

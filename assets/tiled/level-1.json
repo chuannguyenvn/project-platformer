@@ -164,6 +164,18 @@
                  "width":18,
                  "x":342,
                  "y":306
+                }, 
+                {
+                 "gid":108,
+                 "height":18,
+                 "id":9,
+                 "name":"spring",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":288,
+                 "y":306
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -230,7 +242,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":9,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

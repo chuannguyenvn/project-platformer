@@ -11,6 +11,8 @@ export class Data
         [Key.Sprite.COIN_FRONT]: './assets/images/coin-front.png',
         [Key.Sprite.COIN_SIDE]: './assets/images/coin-side.png',
         [Key.Sprite.SPIKE]: './assets/images/spike.png',
+        [Key.Sprite.SPRING_COMPRESSED]: './assets/images/spring-compressed.png',
+        [Key.Sprite.SPRING_RELEASED]: './assets/images/spring-released.png',
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
         [Key.Tilemap.LEVEL_1]: './assets/tiled/level-1.json',
