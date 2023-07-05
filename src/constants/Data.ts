@@ -12,6 +12,7 @@ export class Data
         [Key.Sprite.COIN_SIDE]: './assets/images/coin-side.png',
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
+        [Key.Tilemap.LEVEL_1]: './assets/tiled/level-1.json',
         [Key.Tilemap.LEVEL_1_TERRAIN]: './assets/tiled/level-1_terrain.csv',
         [Key.Tilemap.LEVEL_1_DECORATION]: './assets/tiled/level-1_decoration.csv',
         [Key.Tilemap.LEVEL_2_TERRAIN]: './assets/tiled/level-2_terrain.csv',

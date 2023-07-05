@@ -165,6 +165,7 @@
 
     export enum Tilemap
     {
+        LEVEL_1 = 'key.tilemap.level-1',
         LEVEL_1_TERRAIN = 'key.tilemap.level-1.terrain',
         LEVEL_1_DECORATION = 'key.tilemap.level-1.decoration',
         LEVEL_2_TERRAIN = 'key.tilemap.level-2.terrain',

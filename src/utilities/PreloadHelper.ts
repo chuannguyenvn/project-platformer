@@ -12,7 +12,7 @@ class PreloadHelper
     }
 
     public static preloadTilemap(scene: Scene, key: Constants.Key.Tilemap): void {
-        scene.load.tilemapCSV(key, Constants.Data.FileLookUp[key])
+        scene.load.tilemapTiledJSON(key, Constants.Data.FileLookUp[key])
     }
 }
 
