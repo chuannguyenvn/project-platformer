@@ -16,12 +16,8 @@ export class Data
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
         [Key.Tilemap.LEVEL_1]: './assets/tiled/level-1.json',
-        [Key.Tilemap.LEVEL_1_TERRAIN]: './assets/tiled/level-1_terrain.csv',
-        [Key.Tilemap.LEVEL_1_DECORATION]: './assets/tiled/level-1_decoration.csv',
-        [Key.Tilemap.LEVEL_2_TERRAIN]: './assets/tiled/level-2_terrain.csv',
-        [Key.Tilemap.LEVEL_2_DECORATION]: './assets/tiled/level-2_decoration.csv',
-        [Key.Tilemap.LEVEL_3_TERRAIN]: './assets/tiled/level-3_terrain.csv',
-        [Key.Tilemap.LEVEL_3_DECORATION]: './assets/tiled/level-3_decoration.csv',
+        [Key.Tilemap.LEVEL_2]: './assets/tiled/level-2.json',
+        [Key.Tilemap.LEVEL_3]: './assets/tiled/level-3.json',
     }
 
     public static getCollidableTiles(): number[] {

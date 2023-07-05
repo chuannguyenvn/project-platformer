@@ -39,7 +39,7 @@ class PlayScene extends Scene
         this.setUpInputs()
         this.setUpCamera()
 
-        this.player = this.add.group([new Player(this, 500, 300)], { runChildUpdate: true })
+        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
 
         this.setUpTilemap()
         this.setUpRaycasting()
@@ -71,7 +71,7 @@ class PlayScene extends Scene
     }
 
     private setUpTilemap(): void {
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_2 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
 
@@ -95,7 +95,7 @@ class PlayScene extends Scene
     private setUpRaycasting(): void {
         this.raycasterPlugin = new PhaserRaycaster(this, this.plugins)
         this.raycaster = this.raycasterPlugin.createRaycaster({ debug: true })
-        this.raycaster.mapGameObjects(this.tilemapLayer)
+        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
         this.raycaster.mapGameObjects(this.springs)
         this.raycaster.mapGameObjects(this.spikes)
         this.ray = this.raycaster.createRay()

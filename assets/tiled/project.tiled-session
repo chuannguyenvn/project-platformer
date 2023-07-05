@@ -19,26 +19,47 @@
             "scaleInDock": 2
         },
         "level-1.tmx": {
-            "scale": 1,
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 404,
-                "y": -115.5
+                "x": 168.66666666666666,
+                "y": 219.66666666666663
             }
         },
         "level-1.tmx#Default": {
             "scaleInDock": 1
         },
         "level-1.tmx#tiles_packed": {
-            "scaleInDock": 1
+            "scaleInDock": 2,
+            "scaleInEditor": 3
         },
-        "rules.tmx": {
-            "scale": 11,
+        "level-2.tmx": {
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 287.95454545454544,
-                "y": 719.9545454545455
+                "x": 175,
+                "y": 169.5
             }
+        },
+        "level-2.tmx#Default": {
+            "scaleInDock": 1
+        },
+        "level-2.tmx#tiles_packed": {
+            "scaleInDock": 2
+        },
+        "rules.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 326,
+                "y": 182.99999999999997
+            }
+        },
+        "rules.tmx#tiles_packed": {
+            "scaleInDock": 1
         },
         "tiles_packed.tsx": {
             "scaleInDock": 1,
@@ -48,17 +69,20 @@
     "last.exportedFilePath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
     "last.externalTilesetPath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
     "last.imagePath": "C:/Users/chuan/Desktop/kenney_pixel-platformer(1)/Tilemap",
-    "map.fixedSize": false,
+    "map.fixedSize": true,
+    "map.height": 30,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 18,
     "map.tileWidth": 18,
+    "map.width": 30,
     "openFiles": [
         "rules.tmx",
         "level-1.tmx"
     ],
     "project": "project.tiled-project",
     "recentFiles": [
+        "level-2.tmx",
         "rules.tmx",
         "level-1.tmx",
         "tiles_packed.tsx"
