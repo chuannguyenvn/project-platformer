@@ -24,6 +24,7 @@
     {
         BOOT = 'key.scene.boot',
         LOAD = 'key.scene.load',
+        PLAY = 'key.scene.play',
     }
 
     export namespace Tileset

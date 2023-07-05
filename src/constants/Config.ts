@@ -1,6 +1,7 @@
 ﻿import Phaser from 'phaser'
 import BootScene from '../scenes/BootScene'
 import LoadScene from '../scenes/LoadScene'
+import PlayScene from '../scenes/PlayScene'
 
 
 const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
@@ -8,7 +9,7 @@ const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
     scale: {
         mode: Phaser.Scale.RESIZE,
     },
-    scene: [BootScene, LoadScene],
+    scene: [BootScene, LoadScene, PlayScene],
     backgroundColor: 0xffffff,
     physics: {
         default: 'arcade',
