@@ -2,17 +2,13 @@
 import Phaser from 'phaser'
 import { Key } from '../constants'
 import PlayScene from '../scenes/PlayScene'
+import Interactable from './Interactable'
 
 
-class Spring extends Sprite
+class Spring extends Interactable
 {
-    private playScene: PlayScene
-
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.SPRING_COMPRESSED)
-        this.playScene = playScene
-        this.playScene.physics.add.existing(this)
-        this.playScene.add.existing(this)
 
         playScene.time.delayedCall(0, () => {
             this.setTexture(Key.Sprite.SPRING_COMPRESSED)
