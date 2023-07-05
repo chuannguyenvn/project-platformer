@@ -5,6 +5,7 @@ import { Data } from '../constants'
 import Spike from '../objects/Spike'
 import Spring from '../objects/Spring'
 import PhaserRaycaster from 'phaser-raycaster'
+import Portal from '../objects/Portal'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -24,6 +25,10 @@ class PlayScene extends Scene
     private tilemapLayer: TilemapLayer
 
     private player: Group
+
+    public bluePortal: Portal
+    public orangePortal: Portal
+
     private spikes: GameObject[]
     private springs: GameObject[]
 
@@ -38,14 +43,15 @@ class PlayScene extends Scene
     create() {
         this.setUpInputs()
         this.setUpCamera()
-
-        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
+        this.setUpPlayer()
 
         this.setUpTilemap()
         this.setUpRaycasting()
     }
 
     private setUpInputs(): void {
+        this.input.mouse?.disableContextMenu();
+
         this.cursors = this.input.keyboard?.createCursorKeys() as Phaser.Types.Input.Keyboard.CursorKeys
 
         this.wKey = this.input.keyboard?.addKey('W') as Phaser.Input.Keyboard.Key
@@ -68,6 +74,12 @@ class PlayScene extends Scene
             speed: 0.5,
         }
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig)
+    }
+
+    private setUpPlayer() {
+        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
+        this.bluePortal = new Portal(this, true)
+        this.orangePortal = new Portal(this, false)
     }
 
     private setUpTilemap(): void {

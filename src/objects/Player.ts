@@ -24,7 +24,7 @@ class Player extends Sprite
 
     update(): void {
         this.handleMovement()
-        this.handleRaycast()
+        this.handleGun()
     }
 
     private handleMovement(): void {
@@ -40,7 +40,7 @@ class Player extends Sprite
         }
     }
 
-    private handleRaycast(): void {
+    private handleGun(): void {
         const worldMousePosition = this.playScene.cameras.main.getWorldPoint(
             this.playScene.input.activePointer.x,
             this.playScene.input.activePointer.y,
@@ -51,7 +51,15 @@ class Player extends Sprite
         this.playScene.ray.setOrigin(this.x, this.y)
         this.playScene.ray.setAngle(angle)
         const intersection = this.playScene.ray.cast() as Phaser.Geom.Point
-        console.log(intersection)
+
+        if (this.playScene.input.activePointer.leftButtonDown())
+        {
+            this.playScene.bluePortal.setPosition(intersection.x, intersection.y)
+        }
+        if (this.playScene.input.activePointer.rightButtonDown())
+        {
+            this.playScene.orangePortal.setPosition(intersection.x, intersection.y)
+        }
     }
 
     public handleSpringCollision(): void {

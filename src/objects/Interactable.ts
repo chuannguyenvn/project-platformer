@@ -8,14 +8,14 @@ class Interactable extends Sprite
 {
     protected playScene: PlayScene
 
-    constructor(playScene: PlayScene, x: number, y: number, spriteKey: Key.Sprite) {
+    constructor(playScene: PlayScene, x: number, y: number, spriteKey: Key.Sprite, isStatic = false) {
         super(playScene, x, y, spriteKey)
         this.playScene = playScene
-        this.playScene.physics.add.existing(this)
+        this.playScene.physics.add.existing(this, isStatic)
         this.playScene.add.existing(this)
 
         this.playScene.time.delayedCall(0, () => {
-            this.setTexture(Key.Sprite.SPIKE)
+            this.setTexture(spriteKey)
             this.setDisplaySize(18, 18)
         })
     }
