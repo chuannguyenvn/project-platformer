@@ -6,6 +6,7 @@ import Spike from '../objects/Spike'
 import Spring from '../objects/Spring'
 import PhaserRaycaster from 'phaser-raycaster'
 import { Portal } from '../objects/Portal'
+import Goal from '../objects/Goal'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -25,6 +26,7 @@ class PlayScene extends Scene
     private tilemapLayer: TilemapLayer
 
     private player: Group
+    private goal: Goal
 
     public portals: GameObject[]
     public bluePortal: Portal
@@ -51,7 +53,7 @@ class PlayScene extends Scene
     }
 
     private setUpInputs(): void {
-        this.input.mouse?.disableContextMenu();
+        this.input.mouse?.disableContextMenu()
 
         this.cursors = this.input.keyboard?.createCursorKeys() as Phaser.Types.Input.Keyboard.CursorKeys
 
@@ -79,14 +81,14 @@ class PlayScene extends Scene
 
     private setUpPlayer() {
         this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
-        
+
         this.bluePortal = new Portal(this, true)
         this.orangePortal = new Portal(this, false)
         this.bluePortal.destinationPortal = this.orangePortal
         this.orangePortal.destinationPortal = this.bluePortal
         this.portals = [this.bluePortal, this.orangePortal]
-        
-        this.add.group(this.portals, {runChildUpdate: true})
+
+        this.add.group(this.portals, { runChildUpdate: true })
     }
 
     private setUpTilemap(): void {
@@ -105,6 +107,11 @@ class PlayScene extends Scene
             name: 'spring',
             classType: Spring,
         })
+
+        this.goal = map.createFromObjects('objects', {
+            name: 'goal',
+            classType: Goal,
+        })[0] as Goal
 
         this.physics.add.collider(this.player, this.tilemapLayer as TilemapLayer)
         this.physics.add.collider(this.spikes, this.tilemapLayer as TilemapLayer)
@@ -134,6 +141,10 @@ class PlayScene extends Scene
 
         this.physics.world.overlap(this.player, this.portals, (player, portal) => {
             (player as Player).enterPortal(portal as Portal)
+        })
+
+        this.physics.world.overlap(this.player, this.goal, (player, _) => {
+            (player as Player).win()
         })
     }
 }

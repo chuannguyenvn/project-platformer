@@ -174,8 +174,13 @@ class Player extends Sprite
         }
     }
 
+    public win() : void
+    {
+        console.log("won")
+    }
+    
     public die(): void {
-
+        console.log("lose")
     }
 }
 

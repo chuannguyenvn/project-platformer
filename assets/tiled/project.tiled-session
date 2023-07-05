@@ -73,7 +73,7 @@
             "scaleInDock": 1
         },
         "tiles_packed.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 5.5,
             "scaleInEditor": 1
         }
     },

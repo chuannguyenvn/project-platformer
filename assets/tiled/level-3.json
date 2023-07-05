@@ -47,7 +47,19 @@
          "draworder":"topdown",
          "id":4,
          "name":"objects",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":131,
+                 "height":18,
+                 "id":12,
+                 "name":"goal",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":306,
+                 "y":252
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -96,7 +108,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":12,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

@@ -23,12 +23,7 @@ class Portal extends Interactable
             this.setTintFill(0xff8800)
         }
 
-        this.setMass(0)
         this.setDrag(100000)
-    }
-
-    update() {
-        this.setVelocity(0)
     }
 
     public deactivate(): void {
