@@ -1,11 +1,14 @@
 ﻿import Sprite = Phaser.Physics.Arcade.Sprite
 import Body = Phaser.Physics.Arcade.Body
+import Vector2 = Phaser.Math.Vector2
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Phaser from 'phaser'
+import Portal from './Portal'
 
 class Player extends Sprite
 {
+    private lastFrameVelocity: Vector2
     private playScene: PlayScene
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
@@ -25,6 +28,7 @@ class Player extends Sprite
     update(): void {
         this.handleMovement()
         this.handleGun()
+        this.lastFrameVelocity = this.body?.velocity as Vector2
     }
 
     private handleMovement(): void {
@@ -64,6 +68,16 @@ class Player extends Sprite
 
     public handleSpringCollision(): void {
         (this.body as Body).setVelocityY(-700)
+    }
+
+    public enterPortal(portal: Portal): void {
+        if (!portal.isActive) return
+
+        this.setPosition(portal.destinationPortal.x, portal.destinationPortal.y)
+        this.setVelocity(this.lastFrameVelocity.x, this.lastFrameVelocity.y)
+        
+        this.playScene.bluePortal.deactivate()
+        this.playScene.orangePortal.deactivate()
     }
 
     public die(): void {

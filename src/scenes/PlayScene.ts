@@ -26,6 +26,7 @@ class PlayScene extends Scene
 
     private player: Group
 
+    public portals: GameObject[]
     public bluePortal: Portal
     public orangePortal: Portal
 
@@ -78,12 +79,18 @@ class PlayScene extends Scene
 
     private setUpPlayer() {
         this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
+        
         this.bluePortal = new Portal(this, true)
         this.orangePortal = new Portal(this, false)
+        this.bluePortal.destinationPortal = this.orangePortal
+        this.orangePortal.destinationPortal = this.bluePortal
+        this.portals = [this.bluePortal, this.orangePortal]
+        
+        this.add.group(this.portals, {runChildUpdate: true})
     }
 
     private setUpTilemap(): void {
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_2 })
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
 
@@ -100,6 +107,7 @@ class PlayScene extends Scene
         })
 
         this.physics.add.collider(this.player, this.tilemapLayer as TilemapLayer)
+        // this.physics.add.collider(this.player, this.portals)
         this.physics.add.collider(this.spikes, this.tilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.tilemapLayer as TilemapLayer)
     }
@@ -123,6 +131,11 @@ class PlayScene extends Scene
         this.physics.world.overlap(this.player, this.springs, (player, spring) => {
             (player as Player).handleSpringCollision();
             (spring as Spring).release()
+        })
+
+        this.physics.world.overlap(this.player, this.portals, (player, portal) => {
+            (player as Player).enterPortal(portal as Portal)
+            console.log("aaaaaaaaaaaaaaaaaaaa")
         })
     }
 }

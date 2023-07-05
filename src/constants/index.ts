@@ -1,4 +1,5 @@
 ﻿import { Key } from './Keys'
 import { Data } from './Data'
+import Values from './Values'
 
-export { Key, Data } 
+export { Key, Data, Values } 

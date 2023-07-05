@@ -1,11 +1,15 @@
 ﻿import Interactable from './Interactable'
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
+import { Constants } from '../index'
 
 class Portal extends Interactable
 {
+    public destinationPortal: Portal
+    public isActive: boolean = true
+
     constructor(playScene: PlayScene, isBlue: boolean) {
-        super(playScene, -10000, -10000, Key.Sprite.SQUARE, true)
+        super(playScene, -10000, -10000, Key.Sprite.SQUARE)
 
         this.setDisplaySize(18, 18)
 
@@ -17,9 +21,18 @@ class Portal extends Interactable
         {
             this.setTintFill(0xffff00)
         }
-        
-        this.setImmovable(true)
-        this.setGravity(0, 0)
+
+        this.setMass(0)
+        this.setDrag(100000)
+    }
+
+    update() {
+        this.setVelocity(0)
+    }
+
+    public deactivate(): void {
+        this.isActive = false
+        this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = true)
     }
 }
 

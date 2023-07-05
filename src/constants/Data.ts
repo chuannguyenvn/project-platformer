@@ -27,7 +27,7 @@ export class Data
             Object.values(enumObject).forEach((value) => {
                 if (typeof value === 'number')
                 {
-                    enumValues.push(value)
+                    enumValues.push(value + 1)
                 }
             })
         }
