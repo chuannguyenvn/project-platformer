@@ -1,7 +1,7 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import Player from '../objects/Player'
-import { Data } from '../constants'
+import { Data, Key } from '../constants'
 import Spike from '../objects/Spike'
 import Spring from '../objects/Spring'
 import PhaserRaycaster from 'phaser-raycaster'
@@ -47,9 +47,18 @@ class PlayScene extends Scene
         this.setUpInputs()
         this.setUpCamera()
         this.setUpPlayer()
-
         this.setUpTilemap()
         this.setUpRaycasting()
+
+        this.anims.create({
+            key: Key.Animation.PLAYER_RUNNING,
+            frames: [
+                { key: Key.Sprite.PLAYER_RUNNING },
+                { key: Key.Sprite.PLAYER_IDLE },
+            ],
+            frameRate: 6,
+            repeat: -1,
+        })
     }
 
     private setUpInputs(): void {

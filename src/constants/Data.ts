@@ -14,6 +14,8 @@ export class Data
         [Key.Sprite.DOOR]: './assets/images/door.png',
         [Key.Sprite.SPRING_COMPRESSED]: './assets/images/spring-compressed.png',
         [Key.Sprite.SPRING_RELEASED]: './assets/images/spring-released.png',
+        [Key.Sprite.PLAYER_IDLE]: './assets/images/player-idle.png',
+        [Key.Sprite.PLAYER_RUNNING]: './assets/images/player-running.png',
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
         [Key.Tilemap.LEVEL_1]: './assets/tiled/level-1.json',

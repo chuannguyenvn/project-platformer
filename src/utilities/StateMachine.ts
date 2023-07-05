@@ -3,9 +3,11 @@
     private configuringState: E
     private onEntryCallbacks: StateMachineCallbackUnit<E>[] = []
     private onExitCallbacks: StateMachineCallbackUnit<E>[] = []
+    private sameStateInvoke: boolean
 
-    constructor(initState: E) {
+    constructor(initState: E, sameStateInvoke = false) {
         this._currentState = initState
+        this.sameStateInvoke = sameStateInvoke
     }
 
     private _currentState: E
@@ -15,6 +17,8 @@
     }
 
     public changeState(state: E): void {
+        if (!this.sameStateInvoke && this._currentState === state) return
+
         for (let i = 0; i < this.onExitCallbacks.length; i++)
         {
             if (this.onExitCallbacks[i].state !== this._currentState) continue
@@ -37,14 +41,14 @@
 
     public onEntry(callback: () => void): StateMachine<E> {
         this.onEntryCallbacks.push(
-            new StateMachineCallbackUnit<E>(this.configuringState, callback)
+            new StateMachineCallbackUnit<E>(this.configuringState, callback),
         )
         return this
     }
 
     public onExit(callback: () => void): StateMachine<E> {
         this.onExitCallbacks.push(
-            new StateMachineCallbackUnit<E>(this.configuringState, callback)
+            new StateMachineCallbackUnit<E>(this.configuringState, callback),
         )
         return this
     }

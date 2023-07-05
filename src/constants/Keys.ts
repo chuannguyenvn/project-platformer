@@ -17,11 +17,14 @@
         DOOR = 'key.sprite.door',
         SPRING_COMPRESSED = 'key.sprite.spring-compressed',
         SPRING_RELEASED = 'key.sprite.spring-released',
+        PLAYER_IDLE = 'key.sprite.player-idle',
+        PLAYER_RUNNING = 'key.sprite.player-running',
     }
 
     export enum Animation
     {
         COIN = 'key.animation.coin',
+        PLAYER_RUNNING = 'key.animation.player-running'
     }
 
     export enum Scene

@@ -6,6 +6,7 @@ import { Key } from '../constants'
 import Phaser from 'phaser'
 import { Portal, PortalOrientation } from './Portal'
 import Maths from '../utilities/Maths'
+import StateMachine from '../utilities/StateMachine'
 
 class Player extends Sprite
 {
@@ -14,17 +15,37 @@ class Player extends Sprite
     private overlapingPortalLastFrame: Portal | null
     public overlapingPortalThisFrame: Portal | null
 
+    private playerStateMachine: StateMachine<PlayerState> = new StateMachine<PlayerState>(PlayerState.IDLE)
+    private playerRunningAnimation: Animation
+
     constructor(playScene: PlayScene, x = 0, y = 0) {
-        super(playScene, x, y, Key.Sprite.SQUARE)
+        super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
         playScene.physics.add.existing(this)
         playScene.add.existing(this)
         this.playScene = playScene
 
-        this.setDisplaySize(16, 32)
-        this.setTintFill(0xff0000)
-
         this.playScene.cursors.space.on(Phaser.Input.Keyboard.Events.DOWN, () => {
-            if ((this.body as Body).blocked.down) (this.body as Body).setVelocityY(-500)
+            if ((this.body as Body).blocked.down)
+            {
+                this.playerStateMachine.changeState(PlayerState.JUMPING);
+                (this.body as Body).setVelocityY(-500)
+            }
+        })
+        
+        this.playerStateMachine.configure(PlayerState.IDLE).onEntry(() => {
+            this.setTexture(Key.Sprite.PLAYER_IDLE)
+        })
+
+        this.playerStateMachine.configure(PlayerState.JUMPING).onEntry(() => {
+            this.setTexture(Key.Sprite.PLAYER_RUNNING)
+        })
+
+        this.playerStateMachine.configure(PlayerState.RUNNING).onEntry(() => {
+            this.play(Key.Animation.PLAYER_RUNNING)
+        })
+
+        this.playerStateMachine.configure(PlayerState.RUNNING).onExit(() => {
+            this.stop()
         })
     }
 
@@ -38,11 +59,19 @@ class Player extends Sprite
 
         if (this.playScene.aKey.isDown)
         {
+            if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
+                this.playerStateMachine.changeState(PlayerState.RUNNING);
             (this.body as Body).setVelocityX(-200)
         }
         else if (this.playScene.dKey.isDown)
         {
+            if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
+                this.playerStateMachine.changeState(PlayerState.RUNNING);
             (this.body as Body).setVelocityX(200)
+        }
+        else
+        {
+            this.playerStateMachine.changeState(PlayerState.IDLE)
         }
 
         // if (this.body?.velocity.y as number > 500)
@@ -165,7 +194,7 @@ class Player extends Sprite
             const angle = Maths.SignedDegreeAngleBetween(
                 portal.orientation.clone(),
                 portal.destinationPortal.orientation.clone())
-            
+
             if (angle > 0)
                 this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
             else
@@ -174,14 +203,20 @@ class Player extends Sprite
         }
     }
 
-    public win() : void
-    {
-        console.log("won")
+    public win(): void {
+        console.log('won')
     }
-    
+
     public die(): void {
-        console.log("lose")
+        console.log('lose')
     }
+}
+
+enum PlayerState
+{
+    IDLE,
+    RUNNING,
+    JUMPING,
 }
 
 export default Player
