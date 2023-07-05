@@ -135,7 +135,6 @@ class PlayScene extends Scene
 
         this.physics.world.overlap(this.player, this.portals, (player, portal) => {
             (player as Player).enterPortal(portal as Portal)
-            console.log("aaaaaaaaaaaaaaaaaaaa")
         })
     }
 }

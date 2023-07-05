@@ -8,8 +8,10 @@ import Portal from './Portal'
 
 class Player extends Sprite
 {
-    private lastFrameVelocity: Vector2
     private playScene: PlayScene
+    private lastFrameVelocity: Vector2
+    private overlapingPortalLastFrame: Portal | null
+    public overlapingPortalThisFrame: Portal | null
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.SQUARE)
@@ -28,7 +30,6 @@ class Player extends Sprite
     update(): void {
         this.handleMovement()
         this.handleGun()
-        this.lastFrameVelocity = this.body?.velocity as Vector2
     }
 
     private handleMovement(): void {
@@ -42,6 +43,15 @@ class Player extends Sprite
         {
             (this.body as Body).setVelocityX(200)
         }
+
+        if (this.body?.velocity.y as number > 500)
+        {
+            this.setVelocityY(500)
+        }
+
+        this.lastFrameVelocity = this.body?.velocity as Vector2
+        this.overlapingPortalLastFrame = this.overlapingPortalThisFrame
+        this.overlapingPortalThisFrame = null
     }
 
     private handleGun(): void {
@@ -71,13 +81,20 @@ class Player extends Sprite
     }
 
     public enterPortal(portal: Portal): void {
+        if (this.overlapingPortalLastFrame === portal)
+        {
+            this.overlapingPortalThisFrame = portal
+            return
+        }
         if (!portal.isActive) return
 
         this.setPosition(portal.destinationPortal.x, portal.destinationPortal.y)
         this.setVelocity(this.lastFrameVelocity.x, this.lastFrameVelocity.y)
-        
+
         this.playScene.bluePortal.deactivate()
         this.playScene.orangePortal.deactivate()
+
+        this.overlapingPortalThisFrame = portal.destinationPortal
     }
 
     public die(): void {

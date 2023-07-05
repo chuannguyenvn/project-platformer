@@ -31,8 +31,8 @@ class Portal extends Interactable
     }
 
     public deactivate(): void {
-        this.isActive = false
-        this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = true)
+        // this.isActive = false
+        // this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = true)
     }
 }
 
