@@ -34,7 +34,7 @@ class Player extends Sprite
     }
 
     private handleMovement(): void {
-         (this.body as Body).setVelocityX(0)
+        (this.body as Body).setVelocityX(0)
 
         if (this.playScene.aKey.isDown)
         {
@@ -65,8 +65,11 @@ class Player extends Sprite
 
         this.playScene.ray.setOrigin(this.x, this.y)
         this.playScene.ray.setAngle(angle)
-        const intersection = this.playScene.ray.cast() as Phaser.Geom.Point
+        const intersectionResult = this.playScene.ray.cast()
+        if (intersectionResult === false) return
 
+        const intersection = intersectionResult as Phaser.Geom.Point
+        if ((intersection as any).segment === undefined) return
         let portalToPlace: Portal
         if (this.playScene.input.activePointer.leftButtonDown())
         {

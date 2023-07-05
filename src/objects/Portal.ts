@@ -6,7 +6,7 @@ import Vector2 = Phaser.Math.Vector2
 class Portal extends Interactable
 {
     public destinationPortal: Portal
-    public orientation: Vector2
+    public orientation: Vector2 = Vector2.UP
     public isActive: boolean = true
 
     constructor(playScene: PlayScene, isBlue: boolean) {
