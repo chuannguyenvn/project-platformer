@@ -20,7 +20,7 @@ class Portal extends Interactable
         }
         else
         {
-            this.setTintFill(0xffff00)
+            this.setTintFill(0xff8800)
         }
 
         this.setMass(0)

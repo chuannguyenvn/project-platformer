@@ -24,7 +24,7 @@ class Player extends Sprite
         this.setTintFill(0xff0000)
 
         this.playScene.cursors.space.on(Phaser.Input.Keyboard.Events.DOWN, () => {
-            if ((this.body as Body).blocked.down) (this.body as Body).setVelocityY(-700)
+            if ((this.body as Body).blocked.down) (this.body as Body).setVelocityY(-500)
         })
     }
 
@@ -160,13 +160,12 @@ class Player extends Sprite
         {
             this.setVelocity(this.lastFrameVelocity.x * -1, this.lastFrameVelocity.y * -1)
         }
-        else if (portal.orientation.clone().scale(-1) === portal.destinationPortal.orientation)
+        else if (portal.orientation.clone().scale(-1) !== portal.destinationPortal.orientation)
         {
-        }
-        else
-        {
-            const angle = Maths.SignedDegreeAngleBetween(portal.orientation.clone(), portal.destinationPortal.orientation.clone())
-            console.log(angle)
+            const angle = Maths.SignedDegreeAngleBetween(
+                portal.orientation.clone(),
+                portal.destinationPortal.orientation.clone())
+            
             if (angle > 0)
                 this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
             else

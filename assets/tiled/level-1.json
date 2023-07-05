@@ -236,10 +236,6 @@
          "tilecount":180,
          "tileheight":18,
          "tilewidth":18
-        }, 
-        {
-         "firstgid":181,
-         "source":"tiles_packed.tsx"
         }],
  "tilewidth":18,
  "type":"map",

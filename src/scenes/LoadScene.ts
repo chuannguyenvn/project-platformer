@@ -13,6 +13,7 @@ class LoadScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)
         PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_1)
         PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_2)
+        PreloadHelper.preloadTilemap(this, Constants.Key.Tilemap.LEVEL_3)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_SIDE)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_FRONT)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPIKE)

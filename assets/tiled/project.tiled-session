@@ -10,7 +10,7 @@
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 2
+            "scaleInDock": 1
         },
         ":/automap-tiles.tsx": {
             "scaleInDock": 2
@@ -25,7 +25,7 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 266,
+                "x": 265.3333333333333,
                 "y": 284.99999999999994
             }
         },
@@ -37,11 +37,11 @@
             "scaleInEditor": 3
         },
         "level-2.tmx": {
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 300.5,
-                "y": 369.25
+                "x": 252.66666666666666,
+                "y": 385.66666666666663
             }
         },
         "level-2.tmx#Default": {
@@ -50,12 +50,23 @@
         "level-2.tmx#tiles_packed": {
             "scaleInDock": 2
         },
+        "level-3.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304,
+                "y": 398.33333333333337
+            }
+        },
+        "level-3.tmx#tiles_packed": {
+            "scaleInDock": 1
+        },
         "rules.tmx": {
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 197.99999999999994,
-                "y": 279.66666666666663
+                "x": 222.66666666666666,
+                "y": 232.33333333333337
             }
         },
         "rules.tmx#tiles_packed": {
@@ -82,6 +93,7 @@
     ],
     "project": "project.tiled-project",
     "recentFiles": [
+        "level-3.tmx",
         "level-2.tmx",
         "rules.tmx",
         "level-1.tmx",
