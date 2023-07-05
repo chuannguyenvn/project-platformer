@@ -1,15 +1,20 @@
 ﻿import Sprite = Phaser.Physics.Arcade.Sprite
-import Phaser, { Scene } from 'phaser'
+import Phaser from 'phaser'
 import { Key } from '../constants'
+import PlayScene from '../scenes/PlayScene'
 
 
 class Spike extends Sprite
 {
-    constructor(scene: Scene, x = 0, y = 0) {
-        super(scene, x, y, Key.Sprite.SPIKE)
-        scene.add.existing(this)
-        
-        scene.time.delayedCall(0, () => {
+    private playScene: PlayScene
+
+    constructor(playScene: PlayScene, x = 0, y = 0) {
+        super(playScene, x, y, Key.Sprite.SPIKE)
+        this.playScene = playScene
+        this.playScene.physics.add.existing(this)
+        this.playScene.add.existing(this)
+
+        this.playScene.time.delayedCall(0, () => {
             this.setTexture(Key.Sprite.SPIKE)
             this.setDisplaySize(18, 18)
         })

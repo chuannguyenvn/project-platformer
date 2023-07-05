@@ -19,14 +19,11 @@ class PlayScene extends Scene
     public dKey: Phaser.Input.Keyboard.Key
 
     private player: Group
+    private spikes: GameObject[]
     private springs: GameObject[]
 
     constructor() {
         super({ key: Constants.Key.Scene.PLAY })
-    }
-
-    preload() {
-
     }
 
     create() {
@@ -70,13 +67,7 @@ class PlayScene extends Scene
 
         map.setCollision(Data.getCollidableTiles())
 
-
-        // const coins = map.createFromObjects('objects', {
-        //     name: 'coin',
-        //     classType: Coin,
-        // })
-
-        map.createFromObjects('objects', {
+        this.spikes = map.createFromObjects('objects', {
             name: 'spike',
             classType: Spike,
         })
@@ -87,16 +78,20 @@ class PlayScene extends Scene
         })
 
         this.physics.add.collider(this.player, layer as TilemapLayer)
+        this.physics.add.collider(this.spikes, layer as TilemapLayer)
         this.physics.add.collider(this.springs, layer as TilemapLayer)
     }
 
     update(time: number, delta: number) {
         this.controls.update(delta)
 
+        this.physics.world.overlap(this.player, this.spikes, (player, _) => {
+            (player as Player).die()
+        })
+
         this.physics.world.overlap(this.player, this.springs, (player, spring) => {
             (player as Player).handleSpringCollision();
-            (spring as Spring).release();
-            console.log('aaaaaaaaaaaa');
+            (spring as Spring).release()
         })
     }
 }

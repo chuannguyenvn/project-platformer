@@ -37,6 +37,10 @@ class Player extends Sprite
     public handleSpringCollision(): void {
         (this.body as Body).setVelocityY(-700)
     }
+
+    public die(): void {
+        
+    }
 }
 
 export default Player
