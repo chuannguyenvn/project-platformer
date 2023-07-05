@@ -10,7 +10,7 @@
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 1
+            "scaleInDock": 2
         },
         ":/automap-tiles.tsx": {
             "scaleInDock": 2
@@ -25,8 +25,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 167.99999999999994,
-                "y": 219.66666666666663
+                "x": 266,
+                "y": 284.99999999999994
             }
         },
         "level-1.tmx#Default": {

@@ -5,7 +5,7 @@ import { Data } from '../constants'
 import Spike from '../objects/Spike'
 import Spring from '../objects/Spring'
 import PhaserRaycaster from 'phaser-raycaster'
-import Portal from '../objects/Portal'
+import { Portal } from '../objects/Portal'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -90,7 +90,7 @@ class PlayScene extends Scene
     }
 
     private setUpTilemap(): void {
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_2 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
 
@@ -107,7 +107,6 @@ class PlayScene extends Scene
         })
 
         this.physics.add.collider(this.player, this.tilemapLayer as TilemapLayer)
-        // this.physics.add.collider(this.player, this.portals)
         this.physics.add.collider(this.spikes, this.tilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.tilemapLayer as TilemapLayer)
     }

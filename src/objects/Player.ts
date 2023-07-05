@@ -4,7 +4,8 @@ import Vector2 = Phaser.Math.Vector2
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Phaser from 'phaser'
-import Portal from './Portal'
+import { Portal, PortalOrientation } from './Portal'
+import Maths from '../utilities/Maths'
 
 class Player extends Sprite
 {
@@ -33,7 +34,7 @@ class Player extends Sprite
     }
 
     private handleMovement(): void {
-        (this.body as Body).setVelocityX(0)
+         (this.body as Body).setVelocityX(0)
 
         if (this.playScene.aKey.isDown)
         {
@@ -44,10 +45,10 @@ class Player extends Sprite
             (this.body as Body).setVelocityX(200)
         }
 
-        if (this.body?.velocity.y as number > 500)
-        {
-            this.setVelocityY(500)
-        }
+        // if (this.body?.velocity.y as number > 500)
+        // {
+        //     this.setVelocityY(500)
+        // }
 
         this.lastFrameVelocity = this.body?.velocity as Vector2
         this.overlapingPortalLastFrame = this.overlapingPortalThisFrame
@@ -66,14 +67,70 @@ class Player extends Sprite
         this.playScene.ray.setAngle(angle)
         const intersection = this.playScene.ray.cast() as Phaser.Geom.Point
 
+        let portalToPlace: Portal
         if (this.playScene.input.activePointer.leftButtonDown())
         {
-            this.playScene.bluePortal.setPosition(intersection.x, intersection.y)
+            portalToPlace = this.playScene.bluePortal
         }
-        if (this.playScene.input.activePointer.rightButtonDown())
+        else if (this.playScene.input.activePointer.rightButtonDown())
         {
-            this.playScene.orangePortal.setPosition(intersection.x, intersection.y)
+            portalToPlace = this.playScene.orangePortal
         }
+        else return
+
+        const segment = (intersection as any).segment
+        if (intersection.x > this.x)
+        {
+            if (intersection.y > this.y)
+            {
+                if (segment.x1 === segment.x2)
+                {
+                    portalToPlace.setOrientation(PortalOrientation.LEFT)
+                }
+                else
+                {
+                    portalToPlace.setOrientation(PortalOrientation.UP)
+                }
+            }
+            else
+            {
+                if (segment.x1 === segment.x2)
+                {
+                    portalToPlace.setOrientation(PortalOrientation.LEFT)
+                }
+                else
+                {
+                    portalToPlace.setOrientation(PortalOrientation.DOWN)
+                }
+            }
+        }
+        else
+        {
+            if (intersection.y > this.y)
+            {
+                if (segment.x1 === segment.x2)
+                {
+                    portalToPlace.setOrientation(PortalOrientation.RIGHT)
+                }
+                else
+                {
+                    portalToPlace.setOrientation(PortalOrientation.UP)
+                }
+            }
+            else
+            {
+                if (segment.x1 === segment.x2)
+                {
+                    portalToPlace.setOrientation(PortalOrientation.RIGHT)
+                }
+                else
+                {
+                    portalToPlace.setOrientation(PortalOrientation.DOWN)
+                }
+            }
+        }
+
+        portalToPlace.setPosition(intersection.x, intersection.y)
     }
 
     public handleSpringCollision(): void {
@@ -95,6 +152,24 @@ class Player extends Sprite
         this.playScene.orangePortal.deactivate()
 
         this.overlapingPortalThisFrame = portal.destinationPortal
+
+        if (portal.orientation === portal.destinationPortal.orientation)
+        {
+            this.setVelocity(this.lastFrameVelocity.x * -1, this.lastFrameVelocity.y * -1)
+        }
+        else if (portal.orientation.clone().scale(-1) === portal.destinationPortal.orientation)
+        {
+        }
+        else
+        {
+            const angle = Maths.SignedDegreeAngleBetween(portal.orientation.clone(), portal.destinationPortal.orientation.clone())
+            console.log(angle)
+            if (angle > 0)
+                this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
+            else
+                this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
+
+        }
     }
 
     public die(): void {
