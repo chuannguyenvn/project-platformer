@@ -1,10 +1,12 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import Player from '../objects/Player'
-import { Data } from '../constants'
+import { Data, Key } from '../constants'
+import Coin from '../objects/Coin'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
+import Spike from '../objects/Spike'
 
 class PlayScene extends Scene
 {
@@ -63,11 +65,20 @@ class PlayScene extends Scene
         const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
         const tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)?.setTileSize(18, 18)
         const layer = map.createLayer('terrain', tileset as Tileset)
-        this.add.image(0, 0, Constants.Key.Sprite.KENNEY_DEFAULT_TILESET)
 
         map.setCollision(Data.getCollidableTiles())
 
         this.physics.add.collider(this.player, layer as TilemapLayer)
+
+        // const coins = map.createFromObjects('objects', {
+        //     name: 'coin',
+        //     classType: Coin,
+        // })
+
+        map.createFromObjects('objects', {
+            name: 'spike',
+            classType: Spike
+        })
     }
 
     update(time: number, delta: number) {

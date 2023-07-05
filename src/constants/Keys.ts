@@ -13,6 +13,7 @@
         KENNEY_DEFAULT_TILESET = 'key.sprite.kenney-default-tileset',
         COIN_FRONT = 'key.sprite.coin-front',
         COIN_SIDE = 'key.sprite.coin-side',
+        SPIKE = 'key.sprite.spike',
     }
 
     export enum Animation
