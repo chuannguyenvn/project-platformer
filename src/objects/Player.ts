@@ -2,6 +2,7 @@
 import Body = Phaser.Physics.Arcade.Body
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
+import Phaser from 'phaser'
 
 class Player extends Sprite
 {
@@ -22,6 +23,11 @@ class Player extends Sprite
     }
 
     update(): void {
+        this.handleMovement()
+        this.handleRaycast()
+    }
+
+    private handleMovement(): void {
         (this.body as Body).setVelocityX(0)
 
         if (this.playScene.aKey.isDown)
@@ -34,12 +40,26 @@ class Player extends Sprite
         }
     }
 
+    private handleRaycast(): void {
+        const worldMousePosition = this.playScene.cameras.main.getWorldPoint(
+            this.playScene.input.activePointer.x,
+            this.playScene.input.activePointer.y,
+        )
+
+        const angle = Phaser.Math.Angle.Between(this.x, this.y, worldMousePosition.x, worldMousePosition.y)
+
+        this.playScene.ray.setOrigin(this.x, this.y)
+        this.playScene.ray.setAngle(angle)
+        const intersection = this.playScene.ray.cast() as Phaser.Geom.Point
+        console.log(intersection)
+    }
+
     public handleSpringCollision(): void {
         (this.body as Body).setVelocityY(-700)
     }
 
     public die(): void {
-        
+
     }
 }
 

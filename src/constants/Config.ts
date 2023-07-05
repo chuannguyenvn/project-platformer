@@ -2,7 +2,7 @@
 import BootScene from '../scenes/BootScene'
 import LoadScene from '../scenes/LoadScene'
 import PlayScene from '../scenes/PlayScene'
-
+import PhaserRaycaster from 'phaser-raycaster'
 
 const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
     parent: 'game',
@@ -19,6 +19,15 @@ const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
         },
     },
     pixelArt: true,
+    plugins: {
+        scene: [
+            {
+                key: 'PhaserRaycaster',
+                plugin: PhaserRaycaster,
+                mapping: 'raycasterPlugin'
+            }
+        ]
+    }
 }
 
 
