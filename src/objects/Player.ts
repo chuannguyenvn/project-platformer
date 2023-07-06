@@ -18,6 +18,9 @@ class Player extends Sprite
     private playerStateMachine: StateMachine<PlayerState> = new StateMachine<PlayerState>(PlayerState.IDLE)
     private playerRunningAnimation: Animation
 
+    private channelingMomentum = 1
+    private releaseMomentum = 1
+
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
         playScene.physics.add.existing(this)
@@ -31,7 +34,7 @@ class Player extends Sprite
                 (this.body as Body).setVelocityY(-500)
             }
         })
-        
+
         this.playerStateMachine.configure(PlayerState.IDLE).onEntry(() => {
             this.setTexture(Key.Sprite.PLAYER_IDLE)
         })
@@ -49,9 +52,10 @@ class Player extends Sprite
         })
     }
 
-    update(): void {
+    update(time: number, delta: number): void {
         this.handleMovement()
         this.handleGun()
+        this.channelingMomentum = Math.max(this.channelingMomentum - delta, 1)
     }
 
     private handleMovement(): void {
@@ -100,11 +104,11 @@ class Player extends Sprite
         const intersection = intersectionResult as Phaser.Geom.Point
         if ((intersection as any).segment === undefined) return
         let portalToPlace: Portal
-        if (this.playScene.input.activePointer.leftButtonDown())
+        if (this.playScene.leftMouseDown)
         {
             portalToPlace = this.playScene.bluePortal
         }
-        else if (this.playScene.input.activePointer.rightButtonDown())
+        else if (this.playScene.rightMouseDown)
         {
             portalToPlace = this.playScene.orangePortal
         }
@@ -112,7 +116,7 @@ class Player extends Sprite
 
         const objectHit = (intersection as any).object
         if (objectHit.layer.name !== 'gold_tiles') return
-        
+
         const segment = (intersection as any).segment
         if (intersection.x > this.x)
         {
@@ -166,6 +170,9 @@ class Player extends Sprite
         }
 
         portalToPlace.setPosition(intersection.x, intersection.y)
+
+        this.releaseMomentum = this.channelingMomentum
+        this.channelingMomentum = 1
     }
 
     public handleSpringCollision(): void {
@@ -181,14 +188,11 @@ class Player extends Sprite
 
         this.setPosition(portal.destinationPortal.x, portal.destinationPortal.y)
 
-        this.playScene.bluePortal.activate()
-        this.playScene.orangePortal.activate()
-
         this.overlapingPortalThisFrame = portal.destinationPortal
 
         if (portal.orientation === portal.destinationPortal.orientation)
         {
-            this.setVelocity(this.lastFrameVelocity.x * -1, this.lastFrameVelocity.y * -1)
+            this.setVelocity(this.lastFrameVelocity.x * -this.channelingMomentum, this.lastFrameVelocity.y * -this.channelingMomentum)
         }
         else if (portal.orientation.clone().scale(-1) !== portal.destinationPortal.orientation)
         {
@@ -201,11 +205,8 @@ class Player extends Sprite
             else
                 this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
         }
-        
-        if (this.playScene.bluePortal.isActive)
-        {
-            this.setVelocity(this.body?.velocity.x as number * 2, this.body?.velocity.y as number* 2)
-        }
+
+        this.channelingMomentum++
     }
 
     public win(): void {

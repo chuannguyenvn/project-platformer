@@ -23,6 +23,9 @@ class PlayScene extends Scene
     public sKey: Phaser.Input.Keyboard.Key
     public dKey: Phaser.Input.Keyboard.Key
 
+    public leftMouseDown = false
+    public rightMouseDown = false
+
     private background: Image
 
     private tileset: Tileset
@@ -75,6 +78,19 @@ class PlayScene extends Scene
         this.aKey = this.input.keyboard?.addKey('A') as Phaser.Input.Keyboard.Key
         this.sKey = this.input.keyboard?.addKey('S') as Phaser.Input.Keyboard.Key
         this.dKey = this.input.keyboard?.addKey('D') as Phaser.Input.Keyboard.Key
+
+        this.input.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            if (this.input.activePointer.leftButtonDown())
+            {
+                this.leftMouseDown = true
+                this.time.delayedCall(0, () => this.leftMouseDown = false)
+            }
+            else if (this.input.activePointer.rightButtonDown())
+            {
+                this.rightMouseDown = true
+                this.time.delayedCall(0, () => this.rightMouseDown = false)
+            }
+        })
     }
 
     private setUpPlayer() {
