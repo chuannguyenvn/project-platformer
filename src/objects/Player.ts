@@ -55,7 +55,6 @@ class Player extends Sprite
     update(time: number, delta: number): void {
         this.handleMovement()
         this.handleGun()
-        this.channelingMomentum = Math.max(this.channelingMomentum - delta, 1)
     }
 
     private handleMovement(): void {
@@ -192,7 +191,9 @@ class Player extends Sprite
 
         if (portal.orientation === portal.destinationPortal.orientation)
         {
-            this.setVelocity(this.lastFrameVelocity.x * -this.channelingMomentum, this.lastFrameVelocity.y * -this.channelingMomentum)
+            const xVel = Phaser.Math.Clamp(this.lastFrameVelocity.x * -this.releaseMomentum, -1500, 1500)
+            const yVel = Phaser.Math.Clamp(this.lastFrameVelocity.y * -this.releaseMomentum, -1500, 1500)
+            this.setVelocity(xVel, yVel)
         }
         else if (portal.orientation.clone().scale(-1) !== portal.destinationPortal.orientation)
         {
@@ -206,7 +207,8 @@ class Player extends Sprite
                 this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
         }
 
-        this.channelingMomentum++
+        this.channelingMomentum += 0.25
+        this.releaseMomentum = 1
     }
 
     public win(): void {
