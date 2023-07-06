@@ -12,6 +12,7 @@ import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import GameObject = Phaser.GameObjects.GameObject
 import Ray = Raycaster.Ray
+import Image = Phaser.GameObjects.Image
 
 class PlayScene extends Scene
 {
@@ -21,6 +22,8 @@ class PlayScene extends Scene
     public aKey: Phaser.Input.Keyboard.Key
     public sKey: Phaser.Input.Keyboard.Key
     public dKey: Phaser.Input.Keyboard.Key
+
+    private background: Image
 
     private tileset: Tileset
     private tilemapLayer: TilemapLayer
@@ -73,7 +76,7 @@ class PlayScene extends Scene
     }
 
     private setUpPlayer() {
-        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
+        this.player = this.add.group([new Player(this, 300, 700)], { runChildUpdate: true })
 
         this.bluePortal = new Portal(this, true)
         this.orangePortal = new Portal(this, false)
@@ -86,7 +89,7 @@ class PlayScene extends Scene
 
     private setUpCamera(): void {
         this.cameras.main.setZoom(2)
-        this.cameras.main.startFollow(this.player.getChildren()[0])
+        this.cameras.main.startFollow(this.player.getChildren()[0], false, 0.9, 0.9, 0, 0)
 
         const cursors = this.input.keyboard?.createCursorKeys()
         const controlConfig = {
@@ -98,11 +101,18 @@ class PlayScene extends Scene
             speed: 0.5,
         }
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig)
+
+        this.background = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, Key.Sprite.BACKGROUND)
+        this.background.setOrigin(0.5)
+        this.background.setDepth(-1)
+        this.background.setScrollFactor(0, 0.2)
+        
+        this.cameras.main.setBounds(50, 0, 4200, 840)
     }
 
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
-        
+
         const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer

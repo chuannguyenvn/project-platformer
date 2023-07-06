@@ -22,6 +22,7 @@ class LoadScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPRING_RELEASED)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.PLAYER_IDLE)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.PLAYER_RUNNING)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.BACKGROUND)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SQUARE)
     }
 

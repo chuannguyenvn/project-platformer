@@ -18,6 +18,7 @@ export class Data
         [Key.Sprite.PLAYER_RUNNING]: './assets/images/player-running.png',
         [Key.Sprite.GRADIENT_TOP_TO_BOTTOM]: './assets/images/gradient-top-to-bottom.png',
         [Key.Sprite.KENNEY_DEFAULT_TILESET]: './assets/images/kenney-pixel-platformer.png',
+        [Key.Sprite.BACKGROUND]: './assets/images/background.png',
         [Key.Tilemap.LEVEL_1]: './assets/tiled/level-1.json',
         [Key.Tilemap.LEVEL_2]: './assets/tiled/level-2.json',
         [Key.Tilemap.LEVEL_3]: './assets/tiled/level-3.json',

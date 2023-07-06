@@ -52,6 +52,7 @@ class Player extends Sprite
     update(): void {
         this.handleMovement()
         this.handleGun()
+        console.log(this.x + ", " + this.y)
     }
 
     private handleMovement(): void {

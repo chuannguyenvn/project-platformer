@@ -18,12 +18,16 @@
         "C:/Users/chuan/Default.tsx": {
             "scaleInDock": 2
         },
+        "background.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
         "level-1.tmx": {
-            "scale": 2,
-            "selectedLayer": 2,
+            "scale": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1435,
-                "y": 833.75
+                "x": 4064.6666666666665,
+                "y": 597.1666666666666
             }
         },
         "level-1.tmx#Default": {
@@ -51,8 +55,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 296,
-                "y": 237.25
+                "x": 294,
+                "y": 235.25
             }
         },
         "level-3.tmx#tiles_packed": {
@@ -76,13 +80,13 @@
     },
     "last.exportedFilePath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
     "last.externalTilesetPath": "C:/Users/chuan/WebstormProjects/project-platformer/assets/tiled",
-    "last.imagePath": "C:/Users/chuan/Desktop/kenney_pixel-platformer(1)/Tilemap",
+    "last.imagePath": "C:/Users/chuan/Desktop/kenney_pixel-platformer(1)/Background",
     "map.fixedSize": true,
     "map.height": 30,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 18,
-    "map.tileWidth": 18,
+    "map.tileHeight": 24,
+    "map.tileWidth": 24,
     "map.width": 30,
     "openFiles": [
         "rules.tmx",
@@ -92,6 +96,7 @@
     ],
     "project": "project.tiled-project",
     "recentFiles": [
+        "background.tsx",
         "rules.tmx",
         "level-1.tmx",
         "level-2.tmx",

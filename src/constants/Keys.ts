@@ -19,6 +19,7 @@
         SPRING_RELEASED = 'key.sprite.spring-released',
         PLAYER_IDLE = 'key.sprite.player-idle',
         PLAYER_RUNNING = 'key.sprite.player-running',
+        BACKGROUND = 'ley.sprite.background',
     }
 
     export enum Animation
