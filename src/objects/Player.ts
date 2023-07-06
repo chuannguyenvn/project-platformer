@@ -75,7 +75,7 @@ class Player extends Sprite
 
     private handleMovement(delta: number): void {
         if (this.body?.blocked.down)
-            (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.9)
+            (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.75)
         else
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * (1 - this.xFriction / 100))
 
@@ -204,13 +204,14 @@ class Player extends Sprite
             return
         }
 
-        this.setPosition(portal.destinationPortal.x, portal.destinationPortal.y)
+        this.setPosition(portal.destinationPortal.x + portal.destinationPortal.orientation.x * 20,
+            portal.destinationPortal.y + portal.destinationPortal.orientation.y * 20)
 
         this.overlapingPortalThisFrame = portal.destinationPortal
 
         if (portal.orientation === portal.destinationPortal.orientation)
         {
-            let xVel = Phaser.Math.Clamp(this.lastFrameVelocity.x * this.releaseMomentum, -5500, 5500)
+            let xVel = Phaser.Math.Clamp(this.lastFrameVelocity.x * this.releaseMomentum, -10000, 10000)
             let yVel = Phaser.Math.Clamp(this.lastFrameVelocity.y * this.releaseMomentum, -1500, 1500)
 
             if (portal.orientation === Vector2.UP || portal.orientation === Vector2.DOWN)
