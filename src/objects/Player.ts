@@ -178,13 +178,11 @@ class Player extends Sprite
             this.overlapingPortalThisFrame = portal
             return
         }
-        if (!portal.isActive) return
 
         this.setPosition(portal.destinationPortal.x, portal.destinationPortal.y)
-        this.setVelocity(this.lastFrameVelocity.x, this.lastFrameVelocity.y)
 
-        this.playScene.bluePortal.deactivate()
-        this.playScene.orangePortal.deactivate()
+        this.playScene.bluePortal.activate()
+        this.playScene.orangePortal.activate()
 
         this.overlapingPortalThisFrame = portal.destinationPortal
 
@@ -202,7 +200,11 @@ class Player extends Sprite
                 this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
             else
                 this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
-
+        }
+        
+        if (this.playScene.bluePortal.isActive)
+        {
+            this.setVelocity(this.body?.velocity.x as number * 2, this.body?.velocity.y as number* 2)
         }
     }
 

@@ -2,12 +2,13 @@
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Vector2 = Phaser.Math.Vector2
+import { Constants } from '../index'
 
 class Portal extends Interactable
 {
     public destinationPortal: Portal
     public orientation: Vector2 = Vector2.UP
-    public isActive: boolean = true
+    public isActive: boolean = false
 
     constructor(playScene: PlayScene, isBlue: boolean) {
         super(playScene, -10000, -10000, Key.Sprite.SQUARE)
@@ -26,9 +27,9 @@ class Portal extends Interactable
         this.setDrag(100000)
     }
 
-    public deactivate(): void {
-        // this.isActive = false
-        // this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = true)
+    public activate(): void {
+        this.isActive = true
+        this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = false)
     }
 
     public setOrientation(orientation: PortalOrientation): void {

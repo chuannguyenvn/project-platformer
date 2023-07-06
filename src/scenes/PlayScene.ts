@@ -115,7 +115,7 @@ class PlayScene extends Scene
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
 
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_2 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
         this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
