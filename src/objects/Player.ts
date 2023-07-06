@@ -111,7 +111,8 @@ class Player extends Sprite
         else return
 
         const objectHit = (intersection as any).object
-        console.log(objectHit)
+        if (objectHit.layer.name !== 'gold_tiles') return
+        
         const segment = (intersection as any).segment
         if (intersection.x > this.x)
         {

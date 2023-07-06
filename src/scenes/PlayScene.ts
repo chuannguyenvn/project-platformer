@@ -26,7 +26,9 @@ class PlayScene extends Scene
     private background: Image
 
     private tileset: Tileset
-    private tilemapLayer: TilemapLayer
+    private terrainTilemapLayer: TilemapLayer
+    private decorationTilemapLayer: TilemapLayer
+    private goldTilemapLayer: TilemapLayer
 
     private player: Group
     private goal: Goal
@@ -106,7 +108,7 @@ class PlayScene extends Scene
         this.background.setOrigin(0.5)
         this.background.setDepth(-1)
         this.background.setScrollFactor(0, 0.2)
-        
+
         this.cameras.main.setBounds(50, 0, 4200, 840)
     }
 
@@ -115,8 +117,8 @@ class PlayScene extends Scene
 
         const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
-        this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
-        map.setCollision(Data.getCollidableTiles())
+        this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
+        this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
 
         this.spikes = map.createFromObjects('objects', {
             name: 'spike',
@@ -133,17 +135,21 @@ class PlayScene extends Scene
             classType: Goal,
         })[0] as Goal
 
-        map.createLayer('decoration', this.tileset as Tileset) as TilemapLayer
+        this.decorationTilemapLayer = map.createLayer('decoration', this.tileset as Tileset) as TilemapLayer
+        this.goldTilemapLayer = map.createLayer('gold_tiles', this.tileset as Tileset) as TilemapLayer
+        this.goldTilemapLayer.setCollision([10])
 
-        this.physics.add.collider(this.player, this.tilemapLayer as TilemapLayer)
-        this.physics.add.collider(this.spikes, this.tilemapLayer as TilemapLayer)
-        this.physics.add.collider(this.springs, this.tilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.player, this.terrainTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.player, this.goldTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.spikes, this.terrainTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.springs, this.terrainTilemapLayer as TilemapLayer)
     }
 
     private setUpRaycasting(): void {
         this.raycasterPlugin = new PhaserRaycaster(this, this.plugins)
         this.raycaster = this.raycasterPlugin.createRaycaster({ debug: true })
-        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
+        this.raycaster.mapGameObjects(this.terrainTilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
+        this.raycaster.mapGameObjects(this.goldTilemapLayer, false, { collisionTiles: [10] })
         this.ray = this.raycaster.createRay()
     }
 
