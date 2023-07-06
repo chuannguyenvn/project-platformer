@@ -89,7 +89,7 @@ class PlayScene extends Scene
 
     private setUpCamera(): void {
         this.cameras.main.setZoom(2)
-        this.cameras.main.startFollow(this.player.getChildren()[0], false, 0.9, 0.9, 0, 0)
+        this.cameras.main.startFollow(this.player.getChildren()[0], false, 0.2, 0.2, 0, 0)
 
         const cursors = this.input.keyboard?.createCursorKeys()
         const controlConfig = {
@@ -143,7 +143,7 @@ class PlayScene extends Scene
     private setUpRaycasting(): void {
         this.raycasterPlugin = new PhaserRaycaster(this, this.plugins)
         this.raycaster = this.raycasterPlugin.createRaycaster({ debug: true })
-        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: [10] })
+        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
         this.ray = this.raycaster.createRay()
     }
 

@@ -52,7 +52,6 @@ class Player extends Sprite
     update(): void {
         this.handleMovement()
         this.handleGun()
-        console.log(this.x + ", " + this.y)
     }
 
     private handleMovement(): void {
@@ -111,6 +110,8 @@ class Player extends Sprite
         }
         else return
 
+        const objectHit = (intersection as any).object
+        console.log(objectHit)
         const segment = (intersection as any).segment
         if (intersection.x > this.x)
         {
