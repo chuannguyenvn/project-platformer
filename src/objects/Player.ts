@@ -1,4 +1,4 @@
-﻿import Sprite = Phaser.Physics.Arcade.Sprite
+import Sprite = Phaser.Physics.Arcade.Sprite
 import Body = Phaser.Physics.Arcade.Body
 import Vector2 = Phaser.Math.Vector2
 import PlayScene from '../scenes/PlayScene'

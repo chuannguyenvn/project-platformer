@@ -89,6 +89,14 @@
                 TOP_MID = 102,
                 TOP_RIGHT = 103,
             }
+
+            export enum WoodenPlank
+            {
+                UNIT = 47,
+                LEFT = 48,
+                MID = 49,
+                RIGHT = 50,
+            }
         }
 
         export enum Decorations

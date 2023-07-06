@@ -45,8 +45,8 @@ class PlayScene extends Scene
 
     create() {
         this.setUpInputs()
-        this.setUpCamera()
         this.setUpPlayer()
+        this.setUpCamera()
         this.setUpTilemap()
         this.setUpRaycasting()
 
@@ -72,9 +72,21 @@ class PlayScene extends Scene
         this.dKey = this.input.keyboard?.addKey('D') as Phaser.Input.Keyboard.Key
     }
 
+    private setUpPlayer() {
+        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
+
+        this.bluePortal = new Portal(this, true)
+        this.orangePortal = new Portal(this, false)
+        this.bluePortal.destinationPortal = this.orangePortal
+        this.orangePortal.destinationPortal = this.bluePortal
+        this.portals = [this.bluePortal, this.orangePortal]
+
+        this.add.group(this.portals, { runChildUpdate: true })
+    }
+
     private setUpCamera(): void {
         this.cameras.main.setZoom(2)
-        this.cameras.main.centerOn(450, 350)
+        this.cameras.main.startFollow(this.player.getChildren()[0])
 
         const cursors = this.input.keyboard?.createCursorKeys()
         const controlConfig = {
@@ -88,23 +100,12 @@ class PlayScene extends Scene
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig)
     }
 
-    private setUpPlayer() {
-        this.player = this.add.group([new Player(this, 200, 200)], { runChildUpdate: true })
-
-        this.bluePortal = new Portal(this, true)
-        this.orangePortal = new Portal(this, false)
-        this.bluePortal.destinationPortal = this.orangePortal
-        this.orangePortal.destinationPortal = this.bluePortal
-        this.portals = [this.bluePortal, this.orangePortal]
-
-        this.add.group(this.portals, { runChildUpdate: true })
-    }
-
     private setUpTilemap(): void {
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3 })
+        this.physics.world.TILE_BIAS = 18
+        
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_1 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.tilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
-
         map.setCollision(Data.getCollidableTiles())
 
         this.spikes = map.createFromObjects('objects', {
@@ -122,6 +123,8 @@ class PlayScene extends Scene
             classType: Goal,
         })[0] as Goal
 
+        map.createLayer('decoration', this.tileset as Tileset) as TilemapLayer
+
         this.physics.add.collider(this.player, this.tilemapLayer as TilemapLayer)
         this.physics.add.collider(this.spikes, this.tilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.tilemapLayer as TilemapLayer)
@@ -130,9 +133,7 @@ class PlayScene extends Scene
     private setUpRaycasting(): void {
         this.raycasterPlugin = new PhaserRaycaster(this, this.plugins)
         this.raycaster = this.raycasterPlugin.createRaycaster({ debug: true })
-        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
-        this.raycaster.mapGameObjects(this.springs)
-        this.raycaster.mapGameObjects(this.spikes)
+        this.raycaster.mapGameObjects(this.tilemapLayer, false, { collisionTiles: [10] })
         this.ray = this.raycaster.createRay()
     }
 

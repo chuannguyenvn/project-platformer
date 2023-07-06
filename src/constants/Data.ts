@@ -39,6 +39,8 @@ export class Data
         processEnum(Tileset.Terrain.Grass)
         processEnum(Tileset.Terrain.Dessert)
         processEnum(Tileset.Terrain.Snowy)
+        processEnum(Tileset.Terrain.WoodenPlank)
+        enumValues.push(10)
 
         return enumValues
     }

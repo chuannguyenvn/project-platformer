@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-1.tmx",
+    "activeFile": "level-3.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
     ],
@@ -19,14 +19,11 @@
             "scaleInDock": 2
         },
         "level-1.tmx": {
-            "expandedObjectLayers": [
-                4
-            ],
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 265.3333333333333,
-                "y": 284.99999999999994
+                "x": 1435,
+                "y": 833.75
             }
         },
         "level-1.tmx#Default": {
@@ -40,8 +37,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 252.66666666666666,
-                "y": 385.66666666666663
+                "x": 252,
+                "y": 384.99999999999994
             }
         },
         "level-2.tmx#Default": {
@@ -51,22 +48,22 @@
             "scaleInDock": 2
         },
         "level-3.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 304,
-                "y": 398.33333333333337
+                "x": 296,
+                "y": 237.25
             }
         },
         "level-3.tmx#tiles_packed": {
             "scaleInDock": 1
         },
         "rules.tmx": {
-            "scale": 1.5,
+            "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 222.66666666666666,
-                "y": 232.33333333333337
+                "x": 164,
+                "y": 1180.5
             }
         },
         "rules.tmx#tiles_packed": {
@@ -89,14 +86,16 @@
     "map.width": 30,
     "openFiles": [
         "rules.tmx",
-        "level-1.tmx"
+        "level-1.tmx",
+        "level-2.tmx",
+        "level-3.tmx"
     ],
     "project": "project.tiled-project",
     "recentFiles": [
-        "level-3.tmx",
-        "level-2.tmx",
         "rules.tmx",
         "level-1.tmx",
+        "level-2.tmx",
+        "level-3.tmx",
         "tiles_packed.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
