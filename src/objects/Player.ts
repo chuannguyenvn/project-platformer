@@ -1,6 +1,7 @@
 import Sprite = Phaser.Physics.Arcade.Sprite
 import Body = Phaser.Physics.Arcade.Body
 import Vector2 = Phaser.Math.Vector2
+import Tween = Phaser.Tweens.Tween
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Phaser from 'phaser'
@@ -20,6 +21,9 @@ class Player extends Sprite
 
     private channelingMomentum = 1
     private releaseMomentum = 1
+
+    private gravityTween: Tween
+    private xFriction: number = 1
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
@@ -50,15 +54,30 @@ class Player extends Sprite
         this.playerStateMachine.configure(PlayerState.RUNNING).onExit(() => {
             this.stop()
         })
+
+        this.gravityTween = this.playScene.tweens.addCounter({
+            from: 0,
+            to: 100,
+            duration: 250,
+            ease: Phaser.Math.Easing.Sine.InOut,
+            onUpdate: (tween) => {
+                this.setGravityY(tween.getValue())
+                this.xFriction = tween.getValue() / 100
+            },
+        })
     }
 
     update(time: number, delta: number): void {
-        this.handleMovement()
+        this.handleMovement(delta)
         this.handleGun()
+        this.channelingMomentum = Math.max(this.channelingMomentum - delta / 2000, 1)
     }
 
-    private handleMovement(): void {
-        (this.body as Body).setVelocityX(0)
+    private handleMovement(delta: number): void {
+        if (this.body?.blocked.down)
+            (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.9)
+        else
+            (this.body as Body).setVelocityX((this.body as Body).velocity.x * (1 - this.xFriction / 100))
 
         if (this.playScene.aKey.isDown)
         {
@@ -191,24 +210,42 @@ class Player extends Sprite
 
         if (portal.orientation === portal.destinationPortal.orientation)
         {
-            const xVel = Phaser.Math.Clamp(this.lastFrameVelocity.x * -this.releaseMomentum, -1500, 1500)
-            const yVel = Phaser.Math.Clamp(this.lastFrameVelocity.y * -this.releaseMomentum, -1500, 1500)
+            let xVel = Phaser.Math.Clamp(this.lastFrameVelocity.x * this.releaseMomentum, -5500, 5500)
+            let yVel = Phaser.Math.Clamp(this.lastFrameVelocity.y * this.releaseMomentum, -1500, 1500)
+
+            if (portal.orientation === Vector2.UP || portal.orientation === Vector2.DOWN)
+            {
+                yVel *= -1
+            }
+            else
+            {
+                xVel *= -1
+            }
+
             this.setVelocity(xVel, yVel)
         }
-        else if (portal.orientation.clone().scale(-1) !== portal.destinationPortal.orientation)
+        else
         {
             const angle = Maths.SignedDegreeAngleBetween(
                 portal.orientation.clone(),
                 portal.destinationPortal.orientation.clone())
 
-            if (angle > 0)
-                this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
-            else
-                this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
+            if (Math.abs(angle) !== 180)
+            {
+                if (angle > 0)
+                    this.setVelocity(-this.lastFrameVelocity.y, this.lastFrameVelocity.x)
+                else
+                    this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
+            }
+
+            console.log(angle)
+            console.log(this.body?.velocity)
         }
 
         this.channelingMomentum += 0.25
         this.releaseMomentum = 1
+
+        this.gravityTween.play()
     }
 
     public win(): void {

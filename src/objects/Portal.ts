@@ -3,17 +3,22 @@ import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Vector2 = Phaser.Math.Vector2
 import { Constants } from '../index'
+import Sprite = Phaser.Physics.Arcade.Sprite
 
-class Portal extends Interactable
+class Portal extends Sprite
 {
+    private playScene: PlayScene
     public destinationPortal: Portal
     public orientation: Vector2 = Vector2.UP
     public isActive: boolean = false
 
     constructor(playScene: PlayScene, isBlue: boolean) {
         super(playScene, -10000, -10000, Key.Sprite.SQUARE)
-
-        this.setDisplaySize(18, 18)
+        this.playScene = playScene
+        this.playScene.physics.add.existing(this)
+        this.playScene.add.existing(this)
+        
+        this.setDisplaySize(32, 32)
 
         if (isBlue)
         {
