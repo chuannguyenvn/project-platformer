@@ -1,12 +1,15 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import Player from '../objects/Player'
-import { Data, Key } from '../constants'
+import { Data } from '../constants'
 import Spike from '../objects/Spike'
 import Spring from '../objects/Spring'
 import PhaserRaycaster from 'phaser-raycaster'
 import { Portal } from '../objects/Portal'
 import Goal from '../objects/Goal'
+import Key from '../objects/Key'
+import Lock from '../objects/Lock'
+import LockWall from '../objects/LockWall'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -33,7 +36,8 @@ class PlayScene extends Scene
     private decorationTilemapLayer: TilemapLayer
     private goldTilemapLayer: TilemapLayer
 
-    private player: Group
+    private player: Player
+    private playerGroup: Group
     private goal: Goal
 
     public portals: GameObject[]
@@ -42,6 +46,9 @@ class PlayScene extends Scene
 
     private spikes: GameObject[]
     private springs: GameObject[]
+    private keys: GameObject[]
+    private locks: GameObject[]
+    private lockWalls: GameObject[]
 
     public raycasterPlugin: PhaserRaycaster
     public raycaster: Raycaster
@@ -59,10 +66,10 @@ class PlayScene extends Scene
         this.setUpRaycasting()
 
         this.anims.create({
-            key: Key.Animation.PLAYER_RUNNING,
+            key: Constants.Key.Animation.PLAYER_RUNNING,
             frames: [
-                { key: Key.Sprite.PLAYER_RUNNING },
-                { key: Key.Sprite.PLAYER_IDLE },
+                { key: Constants.Key.Sprite.PLAYER_RUNNING },
+                { key: Constants.Key.Sprite.PLAYER_IDLE },
             ],
             frameRate: 6,
             repeat: -1,
@@ -94,7 +101,8 @@ class PlayScene extends Scene
     }
 
     private setUpPlayer() {
-        this.player = this.add.group([new Player(this, 300, 700)], { runChildUpdate: true })
+        this.player = new Player(this, 300, 700)
+        this.playerGroup = this.add.group([this.player], { runChildUpdate: true })
 
         this.bluePortal = new Portal(this, true)
         this.orangePortal = new Portal(this, false)
@@ -107,7 +115,7 @@ class PlayScene extends Scene
 
     private setUpCamera(): void {
         this.cameras.main.setZoom(2)
-        this.cameras.main.startFollow(this.player.getChildren()[0], false, 0.2, 0.2, 0, 0)
+        this.cameras.main.startFollow(this.playerGroup.getChildren()[0], false, 0.2, 0.2, 0, 0)
 
         const cursors = this.input.keyboard?.createCursorKeys()
         const controlConfig = {
@@ -120,7 +128,7 @@ class PlayScene extends Scene
         }
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig)
 
-        this.background = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, Key.Sprite.BACKGROUND)
+        this.background = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, Constants.Key.Sprite.BACKGROUND)
         this.background.setOrigin(0.5)
         this.background.setDepth(-1)
         this.background.setScrollFactor(0, 0.2)
@@ -146,6 +154,21 @@ class PlayScene extends Scene
             classType: Spring,
         })
 
+        this.keys = map.createFromObjects('objects', {
+            name: 'key',
+            classType: Key,
+        })
+
+        this.locks = map.createFromObjects('objects', {
+            name: 'lock',
+            classType: Lock,
+        })
+
+        this.lockWalls = map.createFromObjects('objects', {
+            name: 'lock-wall',
+            classType: LockWall,
+        })
+
         this.goal = map.createFromObjects('objects', {
             name: 'goal',
             classType: Goal,
@@ -155,10 +178,14 @@ class PlayScene extends Scene
         this.goldTilemapLayer = map.createLayer('gold_tiles', this.tileset as Tileset) as TilemapLayer
         this.goldTilemapLayer.setCollision([10])
 
-        this.physics.add.collider(this.player, this.terrainTilemapLayer as TilemapLayer)
-        this.physics.add.collider(this.player, this.goldTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.playerGroup, this.terrainTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.playerGroup, this.goldTilemapLayer as TilemapLayer)
+        this.physics.add.collider(this.playerGroup, this.locks)
+        this.physics.add.collider(this.playerGroup, this.lockWalls)
         this.physics.add.collider(this.spikes, this.terrainTilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.terrainTilemapLayer as TilemapLayer)
+
+        this.add.group(this.keys, { runChildUpdate: true })
     }
 
     private setUpRaycasting(): void {
@@ -172,20 +199,20 @@ class PlayScene extends Scene
     update(time: number, delta: number) {
         this.controls.update(delta)
 
-        this.physics.world.overlap(this.player, this.spikes, (player, _) => {
+        this.physics.world.overlap(this.playerGroup, this.spikes, (player, _) => {
             (player as Player).die()
         })
 
-        this.physics.world.overlap(this.player, this.springs, (player, spring) => {
+        this.physics.world.overlap(this.playerGroup, this.springs, (player, spring) => {
             (player as Player).handleSpringCollision();
             (spring as Spring).release()
         })
 
-        this.physics.world.overlap(this.player, this.portals, (player, portal) => {
+        this.physics.world.overlap(this.playerGroup, this.portals, (player, portal) => {
             (player as Player).enterPortal(portal as Portal)
         })
 
-        this.physics.world.overlap(this.player, this.goal, (player, _) => {
+        this.physics.world.overlap(this.playerGroup, this.goal, (player, _) => {
             (player as Player).win()
         })
     }

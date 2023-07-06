@@ -25,6 +25,8 @@ class Player extends Sprite
     private gravityTween: Tween
     private xFriction: number = 1
 
+    private hasKey: boolean = false
+
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
         playScene.physics.add.existing(this)
@@ -247,6 +249,12 @@ class Player extends Sprite
         this.releaseMomentum = 1
 
         this.gravityTween.play()
+    }
+
+    public attemptUnlocking(): void {
+        if (!this.hasKey) return
+
+        // Unlock door
     }
 
     public win(): void {
