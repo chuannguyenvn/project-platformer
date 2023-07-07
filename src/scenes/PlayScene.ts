@@ -102,7 +102,7 @@ class PlayScene extends Scene
     }
 
     private setUpPlayer() {
-        this.player = new Player(this, 300, 700)
+        this.player = new Player(this, 300, 600)
         this.playerGroup = this.add.group([this.player], { runChildUpdate: true })
 
         this.bluePortal = new Portal(this, true)
@@ -140,7 +140,9 @@ class PlayScene extends Scene
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
 
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3 })
+        const level = Constants.Key.Tilemap.LEVEL_3
+
+        const map = this.make.tilemap({ key: level })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
         this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
@@ -160,24 +162,29 @@ class PlayScene extends Scene
             classType: Key,
         })
 
-        this.locks = []
-        this.lockWalls = []
-        for (let i = 0; i < 1; i++)
+        if (level === Constants.Key.Tilemap.LEVEL_3)
         {
-            const lock = map.createFromObjects('objects', {
-                name: 'lock-' + i,
-                classType: Lock,
-            })
+            this.locks = []
+            this.lockWalls = []
+            for (let i = 0; i < 8; i++)
+            {
+                const lock = map.createFromObjects('objects', {
+                    name: 'lock-' + i,
+                    classType: Lock,
+                })
 
-            const lockWalls = map.createFromObjects('objects', {
-                name: 'lock-wall-' + i,
-                classType: LockWall,
-            });
+                const lockWalls = map.createFromObjects('objects', {
+                    name: 'lock-wall-' + i,
+                    classType: LockWall,
+                });
 
-            (lock[0] as Lock).lockWalls = lockWalls as LockWall[]
+                (lock[0] as Lock).lockWalls = lockWalls as LockWall[]
 
-            this.locks.push(lock[0])
-            this.lockWalls = this.lockWalls.concat(lockWalls)
+                this.locks.push(lock[0])
+                this.lockWalls = this.lockWalls.concat(lockWalls);
+
+                (lock[0] as Lock).collider = this.physics.add.collider(this.playerGroup, lock.concat(lockWalls))
+            }
         }
 
         this.goal = map.createFromObjects('objects', {
@@ -191,11 +198,9 @@ class PlayScene extends Scene
 
         this.physics.add.collider(this.playerGroup, this.terrainTilemapLayer as TilemapLayer)
         this.physics.add.collider(this.playerGroup, this.goldTilemapLayer as TilemapLayer)
-        this.physics.add.collider(this.playerGroup, this.locks)
-        this.physics.add.collider(this.playerGroup, this.lockWalls)
         this.physics.add.collider(this.spikes, this.terrainTilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.terrainTilemapLayer as TilemapLayer)
-
+        
         this.add.group(this.keys, { runChildUpdate: true })
         this.add.group(this.locks, { runChildUpdate: true })
     }

@@ -3,11 +3,13 @@ import Interactable from './Interactable'
 import { Constants } from '../index'
 import LockWall from './LockWall'
 import Vector2 = Phaser.Math.Vector2
+import Collider = Phaser.Physics.Arcade.Collider
 
 
 class Lock extends Interactable
 {
     public lockWalls: LockWall[]
+    public collider: Collider
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Constants.Key.Sprite.LOCK)
@@ -17,7 +19,7 @@ class Lock extends Interactable
             this.setDisplaySize(18, 18)
         })
 
-        this.setMass(100000)
+        this.setImmovable(true)
         this.setDrag(100000)
     }
 
@@ -34,10 +36,13 @@ class Lock extends Interactable
     public unlock(): void {
         this.lockWalls.forEach(lockWall => lockWall.unlock())
 
+        this.collider.active = false
         this.setDrag(0)
         this.setMass(1)
         this.setAngularVelocity(Phaser.Math.Between(-1000, 1000))
         Phaser.Math.RandomXY(this.body?.velocity as Vector2, 200)
+
+        this.playScene.time.delayedCall(5000, () => this.destroy())
     }
 }
 

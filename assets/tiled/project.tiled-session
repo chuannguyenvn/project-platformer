@@ -29,8 +29,8 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 4021.5,
-                "y": 665.25
+                "x": 3819.5,
+                "y": 679.75
             }
         },
         "level-1.tmx#Default": {
@@ -44,11 +44,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 1,
-            "selectedLayer": 3,
+            "scale": 5.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1867,
-                "y": 562.5
+                "x": 4166.545454545454,
+                "y": 587.5454545454545
             }
         },
         "level-2.tmx#Default": {
@@ -58,11 +58,14 @@
             "scaleInDock": 3
         },
         "level-3.tmx": {
-            "scale": 3,
-            "selectedLayer": 2,
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 431,
-                "y": 684.1666666666666
+                "x": 4175,
+                "y": 545.5
             }
         },
         "level-3.tmx#tiles_packed": {
@@ -72,8 +75,8 @@
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 287.8333333333333,
-                "y": 719.8333333333333
+                "x": 287.33333333333337,
+                "y": 719.5
             }
         },
         "rules.tmx#tiles_packed": {

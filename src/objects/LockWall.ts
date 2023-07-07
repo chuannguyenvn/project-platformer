@@ -14,6 +14,7 @@ class LockWall extends Interactable
             this.setDisplaySize(18, 18)
         })
 
+        this.setImmovable(true)
         this.setDrag(100000)
     }
 
@@ -22,6 +23,7 @@ class LockWall extends Interactable
         this.setMass(1)
         this.setAngularVelocity(Phaser.Math.Between(-1000, 1000))
         Phaser.Math.RandomXY(this.body?.velocity as Vector2, 200)
+        this.playScene.time.delayedCall(5000, () => this.destroy())
     }
 }
 
