@@ -149,7 +149,7 @@ class PlayScene extends Scene
 
         this.background = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, Constants.Key.Sprite.BACKGROUND)
         this.background.setOrigin(0.5)
-        this.background.setDepth(-1)
+        this.background.setDepth(-1000)
         this.background.setScrollFactor(0, 0.2)
 
         this.cameras.main.setBounds(50, 0, 4200, 840)
@@ -206,6 +206,11 @@ class PlayScene extends Scene
 
                 (lock[0] as Lock).collider = this.physics.add.collider(this.playerGroup, lock.concat(lockWalls))
             }
+
+            const castle = this.add.image(3965, 450, Constants.Key.Sprite.CASTLE)
+            castle.setDisplaySize(275, 150)
+            castle.setDepth(-100)
+            castle.setOrigin(0, 1)
         }
 
         this.goal = map.createFromObjects('objects', {
@@ -275,13 +280,12 @@ class PlayScene extends Scene
             this.latestCheckpoint = checkpoint as Checkpoint
         })
     }
-    
-    private handleGodMode()
-    {
+
+    private handleGodMode() {
         if (this.pKey.isDown)
         {
             this.godMode = true
-            console.log("GOD MODE!!!")
+            console.log('GOD MODE!!!')
         }
         else if (this.oKey.isDown)
         {
@@ -315,7 +319,7 @@ class PlayScene extends Scene
             }
         }
     }
-    
+
     public loadLevel(level: Constants.Key.Tilemap) {
         if (level !== this.currentLevel) this.latestCheckpoint = null
         this.transitionScreen.closeAt(this.player.x, this.player.y)
