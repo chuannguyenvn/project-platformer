@@ -10,6 +10,7 @@ import Goal from '../objects/Goal'
 import Key from '../objects/Key'
 import Lock from '../objects/Lock'
 import LockWall from '../objects/LockWall'
+import TransitionScreen from '../objects/TransitionScreen'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -57,6 +58,8 @@ class PlayScene extends Scene
 
     public currentLevel: Constants.Key.Tilemap = Constants.Key.Tilemap.LEVEL_1
 
+    private transitionScreen: TransitionScreen
+
     constructor() {
         super({ key: Constants.Key.Scene.PLAY })
     }
@@ -95,7 +98,11 @@ class PlayScene extends Scene
     }
 
     private setUpPlayer() {
-        this.player = new Player(this, 300, 600)
+        if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
+            this.player = new Player(this, 300, 600)
+        else
+            this.player = new Player(this, 300, 700)
+
         this.playerGroup = this.add.group([this.player], { runChildUpdate: true })
 
         this.bluePortal = new Portal(this, true)
@@ -132,7 +139,7 @@ class PlayScene extends Scene
 
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
-        
+
         const map = this.make.tilemap({ key: this.currentLevel })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
@@ -214,6 +221,9 @@ class PlayScene extends Scene
             frameRate: 6,
             repeat: -1,
         })
+
+        this.transitionScreen = new TransitionScreen(this)
+        this.transitionScreen.openAt(this.player.x, this.player.y)
     }
 
     update(time: number, delta: number) {
@@ -242,8 +252,13 @@ class PlayScene extends Scene
     }
 
     public loadLevel(level: Constants.Key.Tilemap) {
-        this.currentLevel = level
-        this.scene.start(Constants.Key.Scene.PLAY)
+        this.transitionScreen.closeAt(this.player.x, this.player.y)
+
+        this.time.delayedCall(1000, () => {
+
+            this.currentLevel = level
+            this.scene.start(Constants.Key.Scene.PLAY)
+        })
     }
 }
 

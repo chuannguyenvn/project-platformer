@@ -1,10 +1,13 @@
 ﻿import { Scene } from 'phaser'
 import { Constants } from '../index'
 import PreloadHelper from '../utilities/PreloadHelper'
+import TransitionScreen from '../objects/TransitionScreen'
 
 
 class LoadScene extends Scene
 {
+    private transitionScreen: TransitionScreen
+
     constructor() {
         super({ key: Constants.Key.Scene.LOAD })
     }
@@ -30,6 +33,7 @@ class LoadScene extends Scene
     }
 
     create(): void {
+        this.transitionScreen = new TransitionScreen(this)
         this.scene.start(Constants.Key.Scene.PLAY)
     }
 }

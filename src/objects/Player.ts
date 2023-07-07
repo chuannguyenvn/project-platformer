@@ -273,6 +273,7 @@ class Player extends Sprite
 
     public die(): void {
         this.setDrag(10000)
+        this.playScene.loadLevel(this.playScene.currentLevel)
     }
 }
 
