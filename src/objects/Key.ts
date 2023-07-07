@@ -2,12 +2,13 @@
 import Interactable from './Interactable'
 import { Constants } from '../index'
 import Maths from '../utilities/Maths'
+import Lock from './Lock'
 import Vector2 = Phaser.Math.Vector2
-
 
 class Key extends Interactable
 {
     private isCollected = false
+    private targetingLock: Lock | null
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Constants.Key.Sprite.KEY)
@@ -18,11 +19,44 @@ class Key extends Interactable
         })
 
         this.setDrag(100000)
+        this.setDepth(1)
     }
 
     update(time: number, delta: number) {
-        if (!this.isCollected) return
+        if (this.targetingLock) this.flyToLock(delta)
+        if (this.isCollected) this.flyToPlayer(delta)
+    }
 
+    private flyToLock(delta: number): void {
+        if (!this.targetingLock) return
+
+        const lockPosition = new Vector2(this.targetingLock.x, this.targetingLock.y)
+        const currentPosition = new Vector2(this.x, this.y)
+        if (Phaser.Math.Distance.Between(lockPosition.x, lockPosition.y,
+            currentPosition.x, currentPosition.y) > 5)
+        {
+            const newPosition = Maths.lerpVector2(currentPosition, lockPosition, 7 * delta / 1000)
+            this.x = newPosition.x
+            this.y = newPosition.y
+        }
+        else
+        {
+            const lock = this.targetingLock
+            this.targetingLock = null
+            this.playScene.tweens.add({
+                targets: this,
+                scale: 0,
+                duration: 800,
+                ease: Phaser.Math.Easing.Back.In,
+                onComplete: () => {
+                    lock.unlock()
+                    this.destroy()
+                },
+            })
+        }
+    }
+
+    private flyToPlayer(delta: number): void {
         const playerPosition = new Vector2(this.playScene.player.x, this.playScene.player.y)
         const currentPosition = new Vector2(this.x, this.y)
         if (Phaser.Math.Distance.Between(playerPosition.x, playerPosition.y,
@@ -37,7 +71,13 @@ class Key extends Interactable
 
     public collect(): void {
         this.isCollected = true
-        console.log('collected')
+        this.playScene.currentKey = this
+    }
+
+    public unlock(lock: Lock): void {
+        this.isCollected = false
+        this.playScene.currentKey = null
+        this.targetingLock = lock
     }
 }
 

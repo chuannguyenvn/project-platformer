@@ -49,6 +49,7 @@ class PlayScene extends Scene
     private keys: GameObject[]
     private locks: GameObject[]
     private lockWalls: GameObject[]
+    public currentKey: Key | null
 
     public raycasterPlugin: PhaserRaycaster
     public raycaster: Raycaster
@@ -139,7 +140,7 @@ class PlayScene extends Scene
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
 
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3})
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3 })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
         this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
@@ -186,6 +187,7 @@ class PlayScene extends Scene
         this.physics.add.collider(this.springs, this.terrainTilemapLayer as TilemapLayer)
 
         this.add.group(this.keys, { runChildUpdate: true })
+        this.add.group(this.locks, { runChildUpdate: true })
     }
 
     private setUpRaycasting(): void {

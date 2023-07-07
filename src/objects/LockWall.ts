@@ -1,6 +1,7 @@
 ﻿import PlayScene from '../scenes/PlayScene'
 import Interactable from './Interactable'
 import { Constants } from '../index'
+import Vector2 = Phaser.Math.Vector2
 
 
 class LockWall extends Interactable
@@ -17,7 +18,10 @@ class LockWall extends Interactable
     }
 
     public unlock(): void {
-        // Perform unlock
+        this.setDrag(0)
+        this.setMass(1)
+        this.setAngularVelocity(Phaser.Math.Between(-1000, 1000))
+        Phaser.Math.RandomXY(this.body?.velocity as Vector2, 200)
     }
 }
 
