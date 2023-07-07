@@ -26,6 +26,7 @@ class LoadScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.KEY)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.LOCK)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.LOCK_WALL)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.CASTLE)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPRING_COMPRESSED)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPRING_RELEASED)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.PLAYER_IDLE)

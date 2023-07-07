@@ -17,6 +17,7 @@ export class Data
         [Key.Sprite.KEY]: './assets/images/key.png',
         [Key.Sprite.LOCK]: './assets/images/lock.png',
         [Key.Sprite.LOCK_WALL]: './assets/images/lock-wall.png',
+        [Key.Sprite.CASTLE]: './assets/images/castle.jpg',
         [Key.Sprite.SPRING_COMPRESSED]: './assets/images/spring-compressed.png',
         [Key.Sprite.SPRING_RELEASED]: './assets/images/spring-released.png',
         [Key.Sprite.PLAYER_IDLE]: './assets/images/player-idle.png',

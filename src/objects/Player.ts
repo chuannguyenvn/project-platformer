@@ -97,28 +97,56 @@ class Player extends Sprite
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * (1 - this.xFriction / 100))
         }
 
-        if (this.playScene.aKey.isDown)
+        if (!this.playScene.godMode)
         {
-            if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
-                this.playerStateMachine.changeState(PlayerState.RUNNING);
-            (this.body as Body).setVelocityX(-200)
-            this.flipX = false
-        }
-        else if (this.playScene.dKey.isDown)
-        {
-            if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
-                this.playerStateMachine.changeState(PlayerState.RUNNING);
-            (this.body as Body).setVelocityX(200)
-            this.flipX = true
+            if (this.playScene.aKey.isDown)
+            {
+                if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
+                    this.playerStateMachine.changeState(PlayerState.RUNNING);
+                (this.body as Body).setVelocityX(-200)
+                this.flipX = false
+            }
+            else if (this.playScene.dKey.isDown)
+            {
+                if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
+                    this.playerStateMachine.changeState(PlayerState.RUNNING);
+                (this.body as Body).setVelocityX(200)
+                this.flipX = true
+            }
+            else
+            {
+                this.playerStateMachine.changeState(PlayerState.IDLE)
+            }
         }
         else
         {
-            this.playerStateMachine.changeState(PlayerState.IDLE)
+            this.setVelocity(0)
+            
+            if (this.playScene.aKey.isDown)
+            {
+                this.x -= delta
+
+            }
+            if (this.playScene.dKey.isDown)
+            {
+                this.x += delta
+            }
+            if (this.playScene.wKey.isDown)
+            {
+                this.y -= delta
+
+            }
+            if (this.playScene.sKey.isDown)
+            {
+                this.y += delta
+            }
         }
 
         this.lastFrameVelocity = this.body?.velocity as Vector2
         this.overlapingPortalLastFrame = this.overlapingPortalThisFrame
         this.overlapingPortalThisFrame = null
+
+        console.log(this.x + ', ' + this.y)
     }
 
     private handleGun(): void {
@@ -204,7 +232,7 @@ class Player extends Sprite
 
         portalToPlace.setPosition(intersection.x, intersection.y)
         portalToPlace.isActive = true
-        
+
         this.releaseMomentum = this.channelingMomentum
         this.channelingMomentum = 1
     }
@@ -223,7 +251,7 @@ class Player extends Sprite
             this.overlapingPortalThisFrame = portal
             return
         }
-        
+
         if (!portal.isActive || !portal.destinationPortal.isActive) return
 
         this.setPosition(portal.destinationPortal.x + portal.destinationPortal.orientation.x * 20,

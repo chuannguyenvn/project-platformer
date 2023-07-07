@@ -27,6 +27,10 @@ class PlayScene extends Scene
     public aKey: Phaser.Input.Keyboard.Key
     public sKey: Phaser.Input.Keyboard.Key
     public dKey: Phaser.Input.Keyboard.Key
+    public pKey: Phaser.Input.Keyboard.Key
+    public oKey: Phaser.Input.Keyboard.Key
+
+    public godMode: boolean = false
 
     public leftMouseDown = false
     public rightMouseDown = false
@@ -86,6 +90,8 @@ class PlayScene extends Scene
         this.aKey = this.input.keyboard?.addKey('A') as Phaser.Input.Keyboard.Key
         this.sKey = this.input.keyboard?.addKey('S') as Phaser.Input.Keyboard.Key
         this.dKey = this.input.keyboard?.addKey('D') as Phaser.Input.Keyboard.Key
+        this.pKey = this.input.keyboard?.addKey('P') as Phaser.Input.Keyboard.Key
+        this.oKey = this.input.keyboard?.addKey('O') as Phaser.Input.Keyboard.Key
 
         this.input.on(Phaser.Input.Events.POINTER_DOWN, () => {
             if (this.input.activePointer.leftButtonDown())
@@ -240,6 +246,8 @@ class PlayScene extends Scene
     }
 
     update(time: number, delta: number) {
+        this.handleGodMode()
+
         this.controls.update(delta)
 
         this.physics.world.overlap(this.playerGroup, this.spikes, (player, _) => {
@@ -267,7 +275,47 @@ class PlayScene extends Scene
             this.latestCheckpoint = checkpoint as Checkpoint
         })
     }
+    
+    private handleGodMode()
+    {
+        if (this.pKey.isDown)
+        {
+            this.godMode = true
+            console.log("GOD MODE!!!")
+        }
+        else if (this.oKey.isDown)
+        {
+            this.godMode = false
+            console.log('peasant mode')
+        }
 
+        if (this.godMode)
+        {
+            if (this.cursors.right.isDown)
+            {
+                if (this.currentLevel === Constants.Key.Tilemap.LEVEL_1)
+                {
+                    this.loadLevel(Constants.Key.Tilemap.LEVEL_2)
+                }
+                else if (this.currentLevel === Constants.Key.Tilemap.LEVEL_2)
+                {
+                    this.loadLevel(Constants.Key.Tilemap.LEVEL_3)
+                }
+            }
+            else if (this.cursors.left.isDown)
+            {
+                if (this.currentLevel === Constants.Key.Tilemap.LEVEL_2)
+                {
+                    this.loadLevel(Constants.Key.Tilemap.LEVEL_1)
+                }
+                else if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
+                {
+                    this.loadLevel(Constants.Key.Tilemap.LEVEL_2)
+                }
+            }
+        }
+    }
+    
     public loadLevel(level: Constants.Key.Tilemap) {
         if (level !== this.currentLevel) this.latestCheckpoint = null
         this.transitionScreen.closeAt(this.player.x, this.player.y)

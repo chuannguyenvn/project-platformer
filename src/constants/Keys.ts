@@ -20,6 +20,7 @@
         KEY = 'key.sprite.key',
         LOCK = 'key.sprite.lock',
         LOCK_WALL = 'key.sprite.lock-wall',
+        CASTLE = 'key.sprite.castle',
         SPRING_COMPRESSED = 'key.sprite.spring-compressed',
         SPRING_RELEASED = 'key.sprite.spring-released',
         PLAYER_IDLE = 'key.sprite.player-idle',
