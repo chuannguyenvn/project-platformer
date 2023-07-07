@@ -222,7 +222,13 @@ class PlayScene extends Scene
 
     private setUpRaycasting(): void {
         this.raycasterPlugin = new PhaserRaycaster(this, this.plugins)
-        this.raycaster = this.raycasterPlugin.createRaycaster({ debug: true })
+        this.raycaster = this.raycasterPlugin.createRaycaster({
+            debug: {
+                enabled: true,
+                maps: false,
+                rays: true,
+            },
+        })
         this.raycaster.mapGameObjects(this.terrainTilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
         this.raycaster.mapGameObjects(this.goldTilemapLayer, false, { collisionTiles: [10] })
         this.ray = this.raycaster.createRay()

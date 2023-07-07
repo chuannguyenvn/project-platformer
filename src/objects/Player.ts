@@ -69,6 +69,8 @@ class Player extends Sprite
                 this.xFriction = tween.getValue() / 100
             },
         })
+
+        this.flipX = true
     }
 
     update(time: number, delta: number): void {
@@ -87,21 +89,27 @@ class Player extends Sprite
         this.channelingMomentum = Math.max(this.channelingMomentum - delta / 2000, 1)
 
         if (this.body?.blocked.down)
+        {
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.75)
+        }
         else
+        {
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * (1 - this.xFriction / 100))
+        }
 
         if (this.playScene.aKey.isDown)
         {
             if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
                 this.playerStateMachine.changeState(PlayerState.RUNNING);
             (this.body as Body).setVelocityX(-200)
+            this.flipX = false
         }
         else if (this.playScene.dKey.isDown)
         {
             if (this.playerStateMachine.currentState !== PlayerState.JUMPING)
                 this.playerStateMachine.changeState(PlayerState.RUNNING);
             (this.body as Body).setVelocityX(200)
+            this.flipX = true
         }
         else
         {
