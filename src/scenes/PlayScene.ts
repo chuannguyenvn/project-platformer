@@ -36,7 +36,7 @@ class PlayScene extends Scene
     private decorationTilemapLayer: TilemapLayer
     private goldTilemapLayer: TilemapLayer
 
-    private player: Player
+    public player: Player
     private playerGroup: Group
     private goal: Goal
 
@@ -139,7 +139,7 @@ class PlayScene extends Scene
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
 
-        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3 })
+        const map = this.make.tilemap({ key: Constants.Key.Tilemap.LEVEL_3})
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
         this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
@@ -214,6 +214,10 @@ class PlayScene extends Scene
 
         this.physics.world.overlap(this.playerGroup, this.goal, (player, _) => {
             (player as Player).win()
+        })
+
+        this.physics.world.overlap(this.playerGroup, this.keys, (player, key) => {
+            (key as Key).collect()
         })
     }
 }

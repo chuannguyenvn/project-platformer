@@ -128,7 +128,43 @@
          "draworder":"topdown",
          "id":4,
          "name":"objects",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":28,
+                 "height":18,
+                 "id":86,
+                 "name":"key",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":414,
+                 "y":702
+                }, 
+                {
+                 "gid":29,
+                 "height":18,
+                 "id":87,
+                 "name":"lock",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":468,
+                 "y":684
+                }, 
+                {
+                 "gid":30,
+                 "height":18,
+                 "id":88,
+                 "name":"lock-wall",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":468,
+                 "y":666
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -197,7 +233,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":86,
+ "nextobjectid":89,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

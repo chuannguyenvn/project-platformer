@@ -12,6 +12,8 @@ class LockWall extends Interactable
             this.setTexture(Constants.Key.Sprite.LOCK_WALL)
             this.setDisplaySize(18, 18)
         })
+
+        this.setDrag(100000)
     }
 
     public unlock(): void {

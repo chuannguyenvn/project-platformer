@@ -43,6 +43,19 @@ class Maths
         }
         return vector
     }
+
+
+    public static lerpVector2(start: Phaser.Math.Vector2, end: Phaser.Math.Vector2, t: number): Phaser.Math.Vector2 {
+        const lerpedX = Phaser.Math.Linear(start.x, end.x, t)
+        const lerpedY = Phaser.Math.Linear(start.y, end.y, t)
+        return new Phaser.Math.Vector2(lerpedX, lerpedY)
+    }
+
+    public static lerpVector2ByDistance(start: Phaser.Math.Vector2, end: Phaser.Math.Vector2, distance: number): Phaser.Math.Vector2 {
+        const totalDistance = start.distance(end)
+        const t = Phaser.Math.Clamp(distance / totalDistance, 0, 1)
+        return Maths.lerpVector2(start, end, t)
+    }
 }
 
 export default Maths

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-1.tmx",
+    "activeFile": "level-3.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
     ],
@@ -27,10 +27,10 @@
                 4
             ],
             "scale": 2,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 3010,
-                "y": 669.25
+                "x": 4021.5,
+                "y": 665.25
             }
         },
         "level-1.tmx#Default": {
@@ -44,29 +44,29 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 4,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 2699.875,
-                "y": 449.875
+                "x": 1867,
+                "y": 562.5
             }
         },
         "level-2.tmx#Default": {
             "scaleInDock": 1
         },
         "level-2.tmx#tiles_packed": {
-            "scaleInDock": 2
+            "scaleInDock": 3
         },
         "level-3.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 2699.333333333333,
-                "y": 450
+                "x": 431,
+                "y": 684.1666666666666
             }
         },
         "level-3.tmx#tiles_packed": {
-            "scaleInDock": 1
+            "scaleInDock": 2
         },
         "rules.tmx": {
             "scale": 3,
@@ -103,9 +103,9 @@
     "project": "project.tiled-project",
     "recentFiles": [
         "rules.tmx",
-        "level-3.tmx",
-        "level-2.tmx",
         "level-1.tmx",
+        "level-2.tmx",
+        "level-3.tmx",
         "background.tsx",
         "tiles_packed.tsx"
     ],

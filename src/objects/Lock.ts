@@ -19,6 +19,7 @@ class Lock extends Interactable
         })
 
         this.setBodySize(50, 50)
+        this.setDrag(100000)
     }
 
     public unlock(): void {
