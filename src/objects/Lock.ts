@@ -7,13 +7,11 @@ import Vector2 = Phaser.Math.Vector2
 
 class Lock extends Interactable
 {
-    private lockWalls: LockWall[]
+    public lockWalls: LockWall[]
 
-    constructor(playScene: PlayScene, x = 0, y = 0, lockWalls: LockWall[] = []) {
+    constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Constants.Key.Sprite.LOCK)
-
-        this.lockWalls = lockWalls
-
+        
         this.playScene.time.delayedCall(0, () => {
             this.setTexture(Constants.Key.Sprite.LOCK)
             this.setDisplaySize(18, 18)

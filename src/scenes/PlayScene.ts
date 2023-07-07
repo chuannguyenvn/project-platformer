@@ -160,15 +160,25 @@ class PlayScene extends Scene
             classType: Key,
         })
 
-        this.locks = map.createFromObjects('objects', {
-            name: 'lock',
-            classType: Lock,
-        })
+        this.locks = []
+        this.lockWalls = []
+        for (let i = 0; i < 1; i++)
+        {
+            const lock = map.createFromObjects('objects', {
+                name: 'lock-' + i,
+                classType: Lock,
+            })
 
-        this.lockWalls = map.createFromObjects('objects', {
-            name: 'lock-wall',
-            classType: LockWall,
-        })
+            const lockWalls = map.createFromObjects('objects', {
+                name: 'lock-wall-' + i,
+                classType: LockWall,
+            });
+
+            (lock[0] as Lock).lockWalls = lockWalls as LockWall[]
+
+            this.locks.push(lock[0])
+            this.lockWalls = this.lockWalls.concat(lockWalls)
+        }
 
         this.goal = map.createFromObjects('objects', {
             name: 'goal',
