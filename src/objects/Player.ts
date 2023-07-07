@@ -195,7 +195,8 @@ class Player extends Sprite
         }
 
         portalToPlace.setPosition(intersection.x, intersection.y)
-
+        portalToPlace.isActive = true
+        
         this.releaseMomentum = this.channelingMomentum
         this.channelingMomentum = 1
     }
@@ -214,6 +215,8 @@ class Player extends Sprite
             this.overlapingPortalThisFrame = portal
             return
         }
+        
+        if (!portal.isActive || !portal.destinationPortal.isActive) return
 
         this.setPosition(portal.destinationPortal.x + portal.destinationPortal.orientation.x * 20,
             portal.destinationPortal.y + portal.destinationPortal.orientation.y * 20)

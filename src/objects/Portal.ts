@@ -13,12 +13,12 @@ class Portal extends Sprite
     public isActive: boolean = false
 
     constructor(playScene: PlayScene, isBlue: boolean) {
-        super(playScene, -10000, -10000, Key.Sprite.SQUARE)
+        super(playScene, -10000, -10000, Key.Sprite.CIRCLE)
         this.playScene = playScene
         this.playScene.physics.add.existing(this)
         this.playScene.add.existing(this)
         
-        this.setDisplaySize(32, 32)
+        this.setDisplaySize(24, 24)
 
         if (isBlue)
         {
@@ -30,11 +30,6 @@ class Portal extends Sprite
         }
 
         this.setDrag(100000)
-    }
-
-    public activate(): void {
-        this.isActive = true
-        this.playScene.time.delayedCall(Constants.Values.PORTAL_COOLDOWN, () => this.isActive = false)
     }
 
     public setOrientation(orientation: PortalOrientation): void {
