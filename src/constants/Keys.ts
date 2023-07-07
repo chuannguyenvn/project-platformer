@@ -15,6 +15,8 @@
         COIN_SIDE = 'key.sprite.coin-side',
         SPIKE = 'key.sprite.spike',
         DOOR = 'key.sprite.door',
+        FLAG_1 = 'key.sprite.flag-1',
+        FLAG_2 = 'key.sprite.flag-2',
         KEY = 'key.sprite.key',
         LOCK = 'key.sprite.lock',
         LOCK_WALL = 'key.sprite.lock-wall',
@@ -28,7 +30,8 @@
     export enum Animation
     {
         COIN = 'key.animation.coin',
-        PLAYER_RUNNING = 'key.animation.player-running'
+        PLAYER_RUNNING = 'key.animation.player-running',
+        FLAG_WAVING = 'ley.animation.flag-waving'
     }
 
     export enum Scene

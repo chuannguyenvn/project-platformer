@@ -11,6 +11,7 @@ import Key from '../objects/Key'
 import Lock from '../objects/Lock'
 import LockWall from '../objects/LockWall'
 import TransitionScreen from '../objects/TransitionScreen'
+import Checkpoint from '../objects/Checkpoint'
 import Group = Phaser.GameObjects.Group
 import Tileset = Phaser.Tilemaps.Tileset
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
@@ -50,7 +51,7 @@ class PlayScene extends Scene
     private keys: GameObject[]
     private locks: GameObject[]
     private lockWalls: GameObject[]
-    public currentKey: Key | null
+    public currentKey: Key | null = null
 
     public raycasterPlugin: PhaserRaycaster
     public raycaster: Raycaster
@@ -59,6 +60,9 @@ class PlayScene extends Scene
     public currentLevel: Constants.Key.Tilemap = Constants.Key.Tilemap.LEVEL_1
 
     private transitionScreen: TransitionScreen
+
+    private checkpoints: GameObject[]
+    private latestCheckpoint: Checkpoint | null
 
     constructor() {
         super({ key: Constants.Key.Scene.PLAY })
@@ -70,7 +74,7 @@ class PlayScene extends Scene
         this.setUpCamera()
         this.setUpWorld()
         this.setUpRaycasting()
-        this.setUpAnimations()
+        this.setUpTransition()
     }
 
     private setUpInputs(): void {
@@ -98,10 +102,18 @@ class PlayScene extends Scene
     }
 
     private setUpPlayer() {
-        if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
+        if (this.latestCheckpoint)
+        {
+            this.player = new Player(this, this.latestCheckpoint.x, this.latestCheckpoint.y)
+        }
+        else if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
+        {
             this.player = new Player(this, 300, 600)
+        }
         else
+        {
             this.player = new Player(this, 300, 700)
+        }
 
         this.playerGroup = this.add.group([this.player], { runChildUpdate: true })
 
@@ -160,6 +172,11 @@ class PlayScene extends Scene
             classType: Key,
         })
 
+        this.checkpoints = map.createFromObjects('objects', {
+            name: 'checkpoint',
+            classType: Checkpoint,
+        })
+
         if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
         {
             this.locks = []
@@ -211,17 +228,7 @@ class PlayScene extends Scene
         this.ray = this.raycaster.createRay()
     }
 
-    private setUpAnimations(): void {
-        this.anims.create({
-            key: Constants.Key.Animation.PLAYER_RUNNING,
-            frames: [
-                { key: Constants.Key.Sprite.PLAYER_RUNNING },
-                { key: Constants.Key.Sprite.PLAYER_IDLE },
-            ],
-            frameRate: 6,
-            repeat: -1,
-        })
-
+    private setUpTransition(): void {
         this.transitionScreen = new TransitionScreen(this)
         this.transitionScreen.openAt(this.player.x, this.player.y)
     }
@@ -249,11 +256,15 @@ class PlayScene extends Scene
         this.physics.world.overlap(this.playerGroup, this.keys, (player, key) => {
             (key as Key).collect()
         })
+
+        this.physics.world.overlap(this.playerGroup, this.checkpoints, (player, checkpoint) => {
+            this.latestCheckpoint = checkpoint as Checkpoint
+        })
     }
 
     public loadLevel(level: Constants.Key.Tilemap) {
+        if (level !== this.currentLevel) this.latestCheckpoint = null
         this.transitionScreen.closeAt(this.player.x, this.player.y)
-
         this.time.delayedCall(1000, () => {
 
             this.currentLevel = level

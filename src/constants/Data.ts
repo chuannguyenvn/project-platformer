@@ -12,6 +12,8 @@ export class Data
         [Key.Sprite.COIN_SIDE]: './assets/images/coin-side.png',
         [Key.Sprite.SPIKE]: './assets/images/spike.png',
         [Key.Sprite.DOOR]: './assets/images/door.png',
+        [Key.Sprite.FLAG_1]: './assets/images/flag-1.png',
+        [Key.Sprite.FLAG_2]: './assets/images/flag-2.png',
         [Key.Sprite.KEY]: './assets/images/key.png',
         [Key.Sprite.LOCK]: './assets/images/lock.png',
         [Key.Sprite.LOCK_WALL]: './assets/images/lock-wall.png',

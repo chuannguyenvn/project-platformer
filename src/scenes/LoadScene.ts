@@ -21,6 +21,8 @@ class LoadScene extends Scene
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.COIN_FRONT)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.SPIKE)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.DOOR)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.FLAG_1)
+        PreloadHelper.preloadSprite(this, Constants.Key.Sprite.FLAG_2)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.KEY)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.LOCK)
         PreloadHelper.preloadSprite(this, Constants.Key.Sprite.LOCK_WALL)
@@ -33,6 +35,26 @@ class LoadScene extends Scene
     }
 
     create(): void {
+        this.anims.create({
+            key: Constants.Key.Animation.PLAYER_RUNNING,
+            frames: [
+                { key: Constants.Key.Sprite.PLAYER_RUNNING },
+                { key: Constants.Key.Sprite.PLAYER_IDLE },
+            ],
+            frameRate: 6,
+            repeat: -1,
+        })
+
+        this.anims.create({
+            key: Constants.Key.Animation.FLAG_WAVING,
+            frames: [
+                { key: Constants.Key.Sprite.FLAG_1 },
+                { key: Constants.Key.Sprite.FLAG_2 },
+            ],
+            frameRate: 3,
+            repeat: -1,
+        })
+        
         this.transitionScreen = new TransitionScreen(this)
         this.scene.start(Constants.Key.Scene.PLAY)
     }
