@@ -41,7 +41,7 @@ class TransitionScreen extends Phaser.GameObjects.Sprite
         this.scene.tweens.add({
             targets: this.circle,
             scale: 10,
-            duration: 1000,
+            duration: 600,
             ease: Phaser.Math.Easing.Circular.In,
             onComplete: () => this.setVisible(false),
         })

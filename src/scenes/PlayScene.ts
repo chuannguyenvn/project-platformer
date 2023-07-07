@@ -68,7 +68,7 @@ class PlayScene extends Scene
         this.setUpInputs()
         this.setUpPlayer()
         this.setUpCamera()
-        this.setUpTilemap()
+        this.setUpWorld()
         this.setUpRaycasting()
         this.setUpAnimations()
     }
@@ -137,7 +137,7 @@ class PlayScene extends Scene
         this.cameras.main.setBounds(50, 0, 4200, 840)
     }
 
-    private setUpTilemap(): void {
+    private setUpWorld(): void {
         this.physics.world.TILE_BIAS = 18
 
         const map = this.make.tilemap({ key: this.currentLevel })

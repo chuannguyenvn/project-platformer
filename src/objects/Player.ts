@@ -80,6 +80,7 @@ class Player extends Sprite
 
         this.handleMovement(delta)
         this.handleGun()
+        this.checkFallOffMap()
     }
 
     private handleMovement(delta: number): void {
@@ -201,6 +202,10 @@ class Player extends Sprite
 
     public handleSpringCollision(): void {
         (this.body as Body).setVelocityY(-700)
+    }
+
+    private checkFallOffMap(): void {
+        if (this.y > 900) this.die()
     }
 
     public enterPortal(portal: Portal): void {
