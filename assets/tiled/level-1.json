@@ -180,18 +180,6 @@
                 {
                  "gid":69,
                  "height":18,
-                 "id":20,
-                 "name":"spike",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":18,
-                 "x":3600,
-                 "y":720
-                }, 
-                {
-                 "gid":69,
-                 "height":18,
                  "id":21,
                  "name":"spike",
                  "rotation":0,
@@ -274,18 +262,6 @@
                  "y":720
                 }, 
                 {
-                 "gid":69,
-                 "height":18,
-                 "id":28,
-                 "name":"spike",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":18,
-                 "x":3744,
-                 "y":720
-                }, 
-                {
                  "gid":112,
                  "height":18,
                  "id":29,
@@ -296,6 +272,30 @@
                  "width":18,
                  "x":4158,
                  "y":666
+                }, 
+                {
+                 "gid":112,
+                 "height":18,
+                 "id":31,
+                 "name":"checkpoint",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":1188,
+                 "y":720
+                }, 
+                {
+                 "gid":112,
+                 "height":18,
+                 "id":33,
+                 "name":"checkpoint",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":3204,
+                 "y":576
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -365,7 +365,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":31,
+ "nextobjectid":34,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

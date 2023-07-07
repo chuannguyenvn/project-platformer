@@ -26,11 +26,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3819.5,
-                "y": 679.75
+                "x": 3809.6666666666665,
+                "y": 561.3333333333334
             }
         },
         "level-1.tmx#Default": {
@@ -44,11 +44,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 5.5,
+            "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 4166.545454545454,
-                "y": 587.5454545454545
+                "x": 3138,
+                "y": 467.99999999999994
             }
         },
         "level-2.tmx#Default": {
@@ -62,10 +62,10 @@
                 4
             ],
             "scale": 1,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 4175,
-                "y": 545.5
+                "x": 3277.5,
+                "y": 648
             }
         },
         "level-3.tmx#tiles_packed": {
