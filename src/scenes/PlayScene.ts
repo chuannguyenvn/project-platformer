@@ -55,6 +55,8 @@ class PlayScene extends Scene
     public raycaster: Raycaster
     public ray: Ray
 
+    public currentLevel: Constants.Key.Tilemap = Constants.Key.Tilemap.LEVEL_1
+
     constructor() {
         super({ key: Constants.Key.Scene.PLAY })
     }
@@ -65,16 +67,7 @@ class PlayScene extends Scene
         this.setUpCamera()
         this.setUpTilemap()
         this.setUpRaycasting()
-
-        this.anims.create({
-            key: Constants.Key.Animation.PLAYER_RUNNING,
-            frames: [
-                { key: Constants.Key.Sprite.PLAYER_RUNNING },
-                { key: Constants.Key.Sprite.PLAYER_IDLE },
-            ],
-            frameRate: 6,
-            repeat: -1,
-        })
+        this.setUpAnimations()
     }
 
     private setUpInputs(): void {
@@ -139,10 +132,8 @@ class PlayScene extends Scene
 
     private setUpTilemap(): void {
         this.physics.world.TILE_BIAS = 18
-
-        const level = Constants.Key.Tilemap.LEVEL_3
-
-        const map = this.make.tilemap({ key: level })
+        
+        const map = this.make.tilemap({ key: this.currentLevel })
         this.tileset = map.addTilesetImage('tiles_packed', Constants.Key.Sprite.KENNEY_DEFAULT_TILESET) as Tileset
         this.terrainTilemapLayer = map.createLayer('terrain', this.tileset as Tileset) as TilemapLayer
         this.terrainTilemapLayer.setCollision(Data.getCollidableTiles())
@@ -162,7 +153,7 @@ class PlayScene extends Scene
             classType: Key,
         })
 
-        if (level === Constants.Key.Tilemap.LEVEL_3)
+        if (this.currentLevel === Constants.Key.Tilemap.LEVEL_3)
         {
             this.locks = []
             this.lockWalls = []
@@ -200,7 +191,7 @@ class PlayScene extends Scene
         this.physics.add.collider(this.playerGroup, this.goldTilemapLayer as TilemapLayer)
         this.physics.add.collider(this.spikes, this.terrainTilemapLayer as TilemapLayer)
         this.physics.add.collider(this.springs, this.terrainTilemapLayer as TilemapLayer)
-        
+
         this.add.group(this.keys, { runChildUpdate: true })
         this.add.group(this.locks, { runChildUpdate: true })
     }
@@ -211,6 +202,18 @@ class PlayScene extends Scene
         this.raycaster.mapGameObjects(this.terrainTilemapLayer, false, { collisionTiles: Data.getCollidableTiles() })
         this.raycaster.mapGameObjects(this.goldTilemapLayer, false, { collisionTiles: [10] })
         this.ray = this.raycaster.createRay()
+    }
+
+    private setUpAnimations(): void {
+        this.anims.create({
+            key: Constants.Key.Animation.PLAYER_RUNNING,
+            frames: [
+                { key: Constants.Key.Sprite.PLAYER_RUNNING },
+                { key: Constants.Key.Sprite.PLAYER_IDLE },
+            ],
+            frameRate: 6,
+            repeat: -1,
+        })
     }
 
     update(time: number, delta: number) {
@@ -236,6 +239,11 @@ class PlayScene extends Scene
         this.physics.world.overlap(this.playerGroup, this.keys, (player, key) => {
             (key as Key).collect()
         })
+    }
+
+    public loadLevel(level: Constants.Key.Tilemap) {
+        this.currentLevel = level
+        this.scene.start(Constants.Key.Scene.PLAY)
     }
 }
 

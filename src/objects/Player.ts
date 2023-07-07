@@ -2,6 +2,7 @@ import Sprite = Phaser.Physics.Arcade.Sprite
 import Body = Phaser.Physics.Arcade.Body
 import Vector2 = Phaser.Math.Vector2
 import Tween = Phaser.Tweens.Tween
+import Tilemap = Key.Tilemap
 import PlayScene from '../scenes/PlayScene'
 import { Key } from '../constants'
 import Phaser from 'phaser'
@@ -26,6 +27,7 @@ class Player extends Sprite
     private xFriction: number = 1
 
     private hasKey: boolean = false
+    private forceWalkOut: boolean = false
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
@@ -70,12 +72,19 @@ class Player extends Sprite
     }
 
     update(time: number, delta: number): void {
+        if (this.forceWalkOut)
+        {
+            (this.body as Body).setVelocityX(200)
+            return
+        }
+
         this.handleMovement(delta)
         this.handleGun()
-        this.channelingMomentum = Math.max(this.channelingMomentum - delta / 2000, 1)
     }
 
     private handleMovement(delta: number): void {
+        this.channelingMomentum = Math.max(this.channelingMomentum - delta / 2000, 1)
+
         if (this.body?.blocked.down)
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.75)
         else
@@ -97,11 +106,6 @@ class Player extends Sprite
         {
             this.playerStateMachine.changeState(PlayerState.IDLE)
         }
-
-        // if (this.body?.velocity.y as number > 500)
-        // {
-        //     this.setVelocityY(500)
-        // }
 
         this.lastFrameVelocity = this.body?.velocity as Vector2
         this.overlapingPortalLastFrame = this.overlapingPortalThisFrame
@@ -240,9 +244,6 @@ class Player extends Sprite
                 else
                     this.setVelocity(this.lastFrameVelocity.y, -this.lastFrameVelocity.x)
             }
-
-            console.log(angle)
-            console.log(this.body?.velocity)
         }
 
         this.channelingMomentum += 0.25
@@ -251,18 +252,27 @@ class Player extends Sprite
         this.gravityTween.play()
     }
 
-    public attemptUnlocking(): void {
-        if (!this.hasKey) return
-
-        // Unlock door
-    }
-
     public win(): void {
-        console.log('won')
+        this.forceWalkOut = true
+
+        this.playScene.time.delayedCall(2000, () => {
+            if (this.playScene.currentLevel === Tilemap.LEVEL_1)
+            {
+                this.playScene.loadLevel(Tilemap.LEVEL_2)
+            }
+            else if (this.playScene.currentLevel === Tilemap.LEVEL_2)
+            {
+                this.playScene.loadLevel(Tilemap.LEVEL_3)
+            }
+            else
+            {
+
+            }
+        })
     }
 
     public die(): void {
-        console.log('lose')
+        this.setDrag(10000)
     }
 }
 
