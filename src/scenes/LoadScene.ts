@@ -42,8 +42,8 @@ class LoadScene extends Scene
         this.anims.create({
             key: Constants.Key.Animation.PLAYER_RUNNING,
             frames: [
-                { key: Constants.Key.Sprite.PLAYER_RUNNING },
                 { key: Constants.Key.Sprite.PLAYER_IDLE },
+                { key: Constants.Key.Sprite.PLAYER_RUNNING },
             ],
             frameRate: 6,
             repeat: -1,

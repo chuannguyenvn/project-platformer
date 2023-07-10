@@ -30,7 +30,7 @@ class PlayScene extends Scene
     public pKey: Phaser.Input.Keyboard.Key
     public oKey: Phaser.Input.Keyboard.Key
 
-    public godMode: boolean = false
+    public godMode = false
 
     public leftMouseDown = false
     public rightMouseDown = false

@@ -24,10 +24,9 @@ class Player extends Sprite
     private releaseMomentum = 1
 
     private gravityTween: Tween
-    private xFriction: number = 1
+    private xFriction = 1
 
-    private hasKey: boolean = false
-    private forceWalkOut: boolean = false
+    private forceWalkOut = false
 
     constructor(playScene: PlayScene, x = 0, y = 0) {
         super(playScene, x, y, Key.Sprite.PLAYER_IDLE)
@@ -52,6 +51,7 @@ class Player extends Sprite
         })
 
         this.playerStateMachine.configure(PlayerState.RUNNING).onEntry(() => {
+            this.stop()
             this.play(Key.Animation.PLAYER_RUNNING)
         })
 
@@ -90,10 +90,16 @@ class Player extends Sprite
 
         if (this.body?.blocked.down)
         {
+            if (this.playerStateMachine.currentState == PlayerState.JUMPING)
+            {
+                this.playerStateMachine.changeState(PlayerState.IDLE)
+            }
+            
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * 0.75)
         }
         else
         {
+            this.playerStateMachine.changeState(PlayerState.JUMPING);
             (this.body as Body).setVelocityX((this.body as Body).velocity.x * (1 - this.xFriction / 100))
         }
 
@@ -121,7 +127,7 @@ class Player extends Sprite
         else
         {
             this.setVelocity(0)
-            
+
             if (this.playScene.aKey.isDown)
             {
                 this.x -= delta
@@ -145,8 +151,6 @@ class Player extends Sprite
         this.lastFrameVelocity = this.body?.velocity as Vector2
         this.overlapingPortalLastFrame = this.overlapingPortalThisFrame
         this.overlapingPortalThisFrame = null
-
-        console.log(this.x + ', ' + this.y)
     }
 
     private handleGun(): void {
@@ -307,10 +311,6 @@ class Player extends Sprite
             else if (this.playScene.currentLevel === Tilemap.LEVEL_2)
             {
                 this.playScene.loadLevel(Tilemap.LEVEL_3)
-            }
-            else
-            {
-
             }
         })
     }
