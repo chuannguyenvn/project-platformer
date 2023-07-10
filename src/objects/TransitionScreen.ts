@@ -20,7 +20,7 @@ class TransitionScreen extends Phaser.GameObjects.Sprite
         this.setVisible(true)
     }
 
-    public closeAt(x: number, y: number): void {
+    public closeAt(x: number, y: number, ease = Phaser.Math.Easing.Circular.Out, duration = 1000): void {
         this.circle.x = x
         this.circle.y = y
 
@@ -28,8 +28,8 @@ class TransitionScreen extends Phaser.GameObjects.Sprite
         this.scene.tweens.add({
             targets: this.circle,
             scale: 0,
-            ease: Phaser.Math.Easing.Circular.Out,
-            duration: 1000,
+            ease: ease,
+            duration: duration,
         })
     }
 
@@ -47,6 +47,18 @@ class TransitionScreen extends Phaser.GameObjects.Sprite
         })
     }
 
+    public openSlightlyAt(x: number, y: number): void {
+        this.circle.x = x
+        this.circle.y = y
+
+        this.circle.scale = 0
+        this.scene.tweens.add({
+            targets: this.circle,
+            scale: 2,
+            duration: 400,
+            ease: Phaser.Math.Easing.Back.Out,
+        })
+    }
 }
 
 export default TransitionScreen

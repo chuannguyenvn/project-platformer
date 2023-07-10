@@ -151,6 +151,7 @@ class PlayScene extends Scene
         this.background.setOrigin(0.5)
         this.background.setDepth(-1000)
         this.background.setScrollFactor(0, 0.2)
+        this.background.setScale(3)
 
         this.cameras.main.setBounds(50, 0, 4200, 840)
     }
