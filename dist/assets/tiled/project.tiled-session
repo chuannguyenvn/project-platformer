@@ -61,11 +61,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 0.75,
+            "scale": 8,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 4204,
-                "y": 203.33333333333326
+                "x": 3987.875,
+                "y": 374.5625
             }
         },
         "level-3.tmx#tiles_packed": {
